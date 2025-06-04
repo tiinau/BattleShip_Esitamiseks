@@ -20,7 +20,6 @@ public class App {
                 view.setLocationRelativeTo(null); // Paneb ekraani keskele
                 view.setVisible(true); // Tee Jframe nähtavaks
 
-
             }
         });
     }
