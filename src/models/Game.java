@@ -100,8 +100,6 @@ public class Game {
             for(int c = area.startCol; c <= area.endCol; c++) {
                 if(boardMatrix[r][c] == 0){ // Kas on vesi
                     boardMatrix[r][c]= 9; // Pane kaitse
-
-
                 }
             }
         }
