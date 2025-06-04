@@ -26,10 +26,58 @@ public class View extends JFrame {
         add(container); // Paneme konteineri peale
 
         //TEST Frame ja Panel Layout Managerid
-        System.out.println("JFrame:        " + this.getLayout());
-        System.out.println("container:     " + container.getLayout());
-        System.out.println("GameBoard:     " + gameBoard.getLayout());
-        System.out.println("InfoBoard:     " + infoBoard.getLayout());
-        System.out.println("pnlComponents: " + infoBoard.getPnlComponent().getLayout());
+//        System.out.println("JFrame:        " + this.getLayout());
+//        System.out.println("container:     " + container.getLayout());
+//        System.out.println("GameBoard:     " + gameBoard.getLayout());
+//        System.out.println("InfoBoard:     " + infoBoard.getLayout());
+//        System.out.println("pnlComponents: " + infoBoard.getPnlComponent().getLayout());
+    }
+
+    public JLabel getLblMouseXY() {
+        return infoBoard.getLblMouseXY();
+    }
+
+    public JLabel getLblID() {
+        return infoBoard.getLblID();
+    }
+
+    public JLabel getLblRowCol() {
+        return infoBoard.getLblRowCol();
+    }
+
+    public JLabel getLblTime() {
+        return infoBoard.getLblTime();
+    }
+
+    public JLabel getLblShip() {
+        return infoBoard.getLblShip();
+    }
+
+    public JLabel getLblGameBoard() {
+        return infoBoard.getLblGameBoard();
+    }
+
+    public JComboBox<String> getCmbSize() {
+        return infoBoard.getCmbSize();
+    }
+
+    public JButton getBtnNewGame() {
+        return infoBoard.getBtnNewGame();
+    }
+
+    public JButton getBtnScoreBoard() {
+        return infoBoard.getBtnScoreBoard();
+    }
+
+    public JRadioButton getRdoFile() {
+        return infoBoard.getRdoFile();
+    }
+
+    public JRadioButton getRdoDb() {
+        return infoBoard.getRdoDb();
+    }
+
+    public JCheckBox getChcWhere() {
+        return infoBoard.getChcWhere();
     }
 }

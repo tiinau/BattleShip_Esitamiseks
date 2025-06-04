@@ -62,7 +62,7 @@ public class InfoBoard  extends JPanel {
 
         //Tühja osa täitmine, mis on veniv
         gbc.gridx = 0;
-        gbc.gridy = 12;
+        gbc.gridy = 12; // Peab olema 1 rida rohkem kui sul tegelt ridu on, siis ei tee koledaks vaadet suureks tehes.
         gbc.gridwidth = 2; // Kasutusel kaks veergu
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -272,5 +272,53 @@ public class InfoBoard  extends JPanel {
 
     public JPanel getPnlComponent() {
         return pnlComponent;
+    }
+
+    public JLabel getLblMouseXY() {
+        return lblMouseXY;
+    }
+
+    public JLabel getLblID() {
+        return lblID;
+    }
+
+    public JLabel getLblRowCol() {
+        return lblRowCol;
+    }
+
+    public JLabel getLblTime() {
+        return lblTime;
+    }
+
+    public JLabel getLblShip() {
+        return lblShip;
+    }
+
+    public JLabel getLblGameBoard() {
+        return lblGameBoard;
+    }
+
+    public JComboBox<String> getCmbSize() {
+        return cmbSize;
+    }
+
+    public JButton getBtnNewGame() {
+        return btnNewGame;
+    }
+
+    public JButton getBtnScoreBoard() {
+        return btnScoreBoard;
+    }
+
+    public JRadioButton getRdoFile() {
+        return rdoFile;
+    }
+
+    public JRadioButton getRdoDb() {
+        return rdoDb;
+    }
+
+    public JCheckBox getChcWhere() {
+        return chcWhere;
     }
 }
