@@ -1,17 +1,19 @@
 package models;
+
 import java.util.Random;
+import java.util.stream.IntStream;
 
 public class Game {
     private int boardSize; // Mängulaua suurus vaikimisi 10x10
     private int[][] boardMatrix; // Mängulaual asuvad laevad
     private Random random = new Random();
     //private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1}; // Laevade pikkused
-    //private int[] ships = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1}; // Laevade pikkused
-    private int[] ships = {4, 3, 2, 2, 2, 2,  1, 1, 1, 1}; // Laevade pikkused
-    private int shipsCounter =0;
-    private int clickCounter =0; //klikkide lugemine
+    //private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1}; // Laevade pikkused
+    private int[] ships = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1}; // Laevade pikkused
+    private int shipsCounter = 0;
+    private int clickCounter = 0; //klikkide lugemine
 
-    public Game(int boardSize){
+    public Game(int boardSize) {
         this.boardSize = boardSize;
         this.boardMatrix = new int[boardSize][boardSize];
     }
@@ -19,11 +21,11 @@ public class Game {
     /**
      * Näita konsoolis mängulaua sisu
      */
-    public void showGameBoard(){
+    public void showGameBoard() {
         System.out.println();           // Tühi rida
         for (int row = 0; row < boardSize; row++) {
             for (int col = 0; col < boardSize; col++) {
-                System.out.print(boardMatrix[row][col]+ " ");
+                System.out.print(boardMatrix[row][col] + " ");
             }
             System.out.println(); // Veeru lõpus uuele reale
         }
@@ -34,12 +36,9 @@ public class Game {
         int shipsTotal = ships.length;  // Kui palju on laevu kokku
         int shipsPlaced = 0;  // Kui palju on laevu paigutatud
         // TODO hiljem lisam laevade järjekorra segamine
-        while(shipsPlaced < shipsTotal) {
-
-
+        while (shipsPlaced < shipsTotal) {
             int length = ships[shipsPlaced];  // Millist laeva paigutada (laeva pikkus)
             boolean placed = false;    // Laevu pole paigutatud
-
 
             // Valime juhusliku rea ja veeru
             int startRow = random.nextInt(boardSize);   // Rida
@@ -59,9 +58,7 @@ public class Game {
                         break outerLoop; // Katkesta mõlemad for loop kordused
                     }
                 }
-
             }
-
             if (placed) {
                 shipsPlaced++;
 
@@ -69,24 +66,34 @@ public class Game {
                 setupGameBoard();
                 return;
             }
-
         }
+        // Eemaldame ajutised kitsetsoonid (9-d), jätte alles ainult laevad (1-4) ja tühjad vee kohad
+        replaceNineToZero();
+    }
 
+    private void replaceNineToZero() {
+        for (int row = 0; row < boardSize; row++) {
+            for (int col = 0; col < boardSize; col++) {
+                if (boardMatrix[row][col] == 9) {
+                    boardMatrix[row][col] = 0;
+                }
+            }
+        }
     }
 
     private boolean tryPlaceShip(int row, int col, int length, boolean vertical) {
         // Kontrolli kas laev mahub mängulauale
-        if(vertical && row + length> boardSize) return false;
-        if(!vertical && col + length> boardSize) return false;
+        if (vertical && row + length > boardSize) return false;
+        if (!vertical && col + length > boardSize) return false;
 
         // Kontrolli kas piirkond on vaba (kaitsetsoon)
-        if(!canPlaceShip(row, col, length, vertical)) return false;
+        if (!canPlaceShip(row, col, length, vertical)) return false;
 
         // Kirjutame laeva mängualuale : paigutame igasse lahtrisse laeva pikkuse
-        for(int i=0; i < length; i++){
-            int r = vertical ? row + i : row ;  // Kasutame rida või mitte, sõltub suunast kas laev on vertik või horisont
-            int c = vertical ? col : col +i ; // Sama veeru kohta
-            boardMatrix[r][c]= length; // Määrame laeva lahtrisse selle mpikkuse
+        for (int i = 0; i < length; i++) {
+            int r = vertical ? row + i : row;  // Kasutame rida või mitte, sõltub suunast kas laev on vertik või horisont
+            int c = vertical ? col : col + i; // Sama veeru kohta
+            boardMatrix[r][c] = length; // Määrame laeva lahtrisse selle mpikkuse
         }
         // Laeva ümber kaitsetsooni lisamine (laevad ei puuduta teineteist)
         makeSurrounding(row, col, length, vertical);
@@ -96,21 +103,21 @@ public class Game {
     private void makeSurrounding(int row, int col, int length, boolean vertical) {
         Area area = getShipSurroundingArea(row, col, length, vertical);
         // Käime ala iga s lahtris ja kui seal on vesi (0) , siis märgime selle kaitseks (9)
-        for(int r = area.startRow; r <= area.endRow; r++) {
-            for(int c = area.startCol; c <= area.endCol; c++) {
-                if(boardMatrix[r][c] == 0){ // Kas on vesi
-                    boardMatrix[r][c]= 9; // Pane kaitse
+        for (int r = area.startRow; r <= area.endRow; r++) {
+            for (int c = area.startCol; c <= area.endCol; c++) {
+                if (boardMatrix[r][c] == 0) { // Kas on vesi
+                    boardMatrix[r][c] = 9; // Pane kaitse
                 }
             }
         }
     }
 
     private boolean canPlaceShip(int row, int col, int length, boolean vertical) {
-        Area area = getShipSurroundingArea(row, col, length, vertical) ; // Saame laeva ümbritseva ala
+        Area area = getShipSurroundingArea(row, col, length, vertical); // Saame laeva ümbritseva ala
         // Kontrollime igat lahtrit alal  - kuskil pole tühjust, (0), katkestame
-        for(int r = area.startRow; r <= area.endRow; r++) {
-            for(int c = area.startCol; c <= area.endCol; c++) {
-                if(boardMatrix[r][c] != 0) return false; // Midagi on ees, ei sobi
+        for (int r = area.startRow; r <= area.endRow; r++) {
+            for (int c = area.startCol; c <= area.endCol; c++) {
+                if (boardMatrix[r][c] != 0) return false; // Midagi on ees, ei sobi
             }
         }
         return true;  // Kõik kohad olid vabad
@@ -118,12 +125,31 @@ public class Game {
 
 
     private Area getShipSurroundingArea(int row, int col, int length, boolean vertical) {
-
-        int startRow = Math.max(0, row -1);
-        int endRow = Math.min(boardSize -1, vertical ? row + length : row +1);
-        int startCol = Math.max(0, col -1);
-        int endCol = Math.min(boardSize -1, vertical ? col +1   : col + length);
+        int startRow = Math.max(0, row - 1);
+        int endRow = Math.min(boardSize - 1, vertical ? row + length : row + 1);
+        int startCol = Math.max(0, col - 1);
+        int endCol = Math.min(boardSize - 1, vertical ? col + 1 : col + length);
         return new Area(startRow, endRow, startCol, endCol);
     }
+ // GETTERS
 
+    public int[][] getBoardMatrix() {
+        return boardMatrix;
+    }
+
+    public int getShipsCounter() {
+        return shipsCounter;
+    }
+
+    public int getClickCounter() {
+        return clickCounter;
+    }
+
+    /**
+     * (4,3,3,jne) laevade summa näide on 10(4,3,3)
+     * @return laevade pikkuste summa
+     */
+    public int getShipsParts(){
+        return IntStream.of(ships).sum();
+    }
 }
