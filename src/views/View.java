@@ -1,11 +1,14 @@
 package views;
 
+import controllers.Controller;
 import models.Model;
 import views.panels.GameBoard;
 import views.panels.InfoBoard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 public class View extends JFrame {
     private Model model;
@@ -79,5 +82,17 @@ public class View extends JFrame {
 
     public JCheckBox getChcWhere() {
         return infoBoard.getChcWhere();
+    }
+
+    public void registerGameBoardMouse(Controller controller) {
+        gameBoard.addMouseListener(controller); // Hiire kuulamine. Võtame mängulaualt selle hiire liikumise
+        gameBoard.addMouseMotionListener(controller);
+    }
+    public void registerComboBox(ItemListener itemListener) { //Registreerib endale selle valiku, mis on tehtud comboboxis
+        infoBoard.getCmbSize().addItemListener(itemListener); //Hiire liikumine
+    }
+
+    public void registerNewGameButton(ActionListener actionListener) {
+        infoBoard.getBtnNewGame().addActionListener(actionListener); // Nupu klikimise funktsionaalsus
     }
 }
