@@ -17,7 +17,7 @@ public class GameBoard extends JPanel {
 
     public GameBoard(Model model) { // Konstruktor
         this.model = model;
-        setBackground(new Color(127, 241, 207));
+        setBackground(new Color(105, 186, 193));
     }
 
     @Override

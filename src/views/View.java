@@ -24,5 +24,12 @@ public class View extends JFrame {
         container.add(infoBoard, BorderLayout.EAST); // Paneme paneeli peale infotahvli idasse
 
         add(container); // Paneme konteineri peale
+
+        //TEST Frame ja Panel Layout Managerid
+        System.out.println("JFrame:        " + this.getLayout());
+        System.out.println("container:     " + container.getLayout());
+        System.out.println("GameBoard:     " + gameBoard.getLayout());
+        System.out.println("InfoBoard:     " + infoBoard.getLayout());
+        System.out.println("pnlComponents: " + infoBoard.getPnlComponent().getLayout());
     }
 }

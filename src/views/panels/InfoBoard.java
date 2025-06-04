@@ -8,6 +8,7 @@ public class InfoBoard  extends JPanel {
     private JPanel pnlComponent = new JPanel(new GridBagLayout());
     private GridBagConstraints gbc = new GridBagConstraints();
 
+
     // Kaks kirjastiili
     private Font fontBold = new Font("Verdana", Font.BOLD, 14);
     private Font fontNormal = new Font("Verdana", Font.PLAIN, 14);
@@ -31,9 +32,15 @@ public class InfoBoard  extends JPanel {
     private JButton btnScoreBoard; // nupp edetabel
 
     //TODO edetabeliga seotud asjad
+    private JRadioButton rdoFile; // Radionupp - info looetakse failist
+    private JRadioButton rdoDb; // Info loetakse andmebaasist
+    private ButtonGroup btnGroup = new ButtonGroup(); // Mõlemad rdo nupud on siin
+    private JCheckBox chcWhere; // Eraldi aknas "linnuke"
+
 
     public InfoBoard() {
-        setLayout(new FlowLayout(FlowLayout.LEFT));
+        // setLayout(new FlowLayout(FlowLayout.LEFT)); // Algne layout
+        setLayout(new BorderLayout()); // Uus layout, selleks et venitaks selle kollase paneeli suuremaks
         setPreferredSize(new Dimension(400, 188));
         setBackground(new Color(164, 241, 248));
 
@@ -51,9 +58,23 @@ public class InfoBoard  extends JPanel {
         setupLine6();
         setupComboBox();
         setupButtons();
+        setupRadioButtons();
+
+        //Tühja osa täitmine, mis on veniv
+        gbc.gridx = 0;
+        gbc.gridy = 12;
+        gbc.gridwidth = 2; // Kasutusel kaks veergu
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        JPanel flowPanel = new JPanel();
+        flowPanel.setOpaque(false); // Nähtamatu, ainult venib
+        pnlComponent.add(flowPanel, gbc);
 
 
-        add(pnlComponent); // Lisame selle kollase paneeli frame paneelile
+        add(pnlComponent, BorderLayout.CENTER); // Lisame selle kollase paneeli frame paneelile
+
+
     }
 
     private void setupLine1() {
@@ -203,5 +224,53 @@ public class InfoBoard  extends JPanel {
         pnlComponent.add(btnScoreBoard, gbc);
 
     }
+    private void setupRadioButtons() {
+        JLabel label = new JLabel("Edetabeli sisu");
+        label.setFont(fontBold);
+        label.setPreferredSize(new Dimension(150, 28));
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        pnlComponent.add(label, gbc);
 
+        rdoFile = new JRadioButton("Fail");
+        rdoFile.setFont(fontNormal);
+        rdoFile.setBackground(new Color(244, 243, 165, 237));
+        rdoFile.setPreferredSize(new Dimension(106, 28));
+        rdoFile.setSelected(true);
+        gbc.gridx = 1;
+        gbc.gridy = 9;
+        pnlComponent.add(rdoFile, gbc);
+
+
+        rdoDb = new JRadioButton("Andmebaas");
+        rdoDb.setFont(fontNormal);
+        rdoDb.setBackground(new Color(244, 243, 165, 237));
+        rdoDb.setPreferredSize(new Dimension(120, 28));
+        gbc.gridx = 1;
+        gbc.gridy = 10;
+        pnlComponent.add(rdoDb, gbc);
+
+        btnGroup.add(rdoDb);
+        btnGroup.add(rdoFile);
+
+        chcWhere = new JCheckBox("Eraldi aknas");
+        chcWhere.setFont(fontNormal);
+        chcWhere.setBackground(new Color(244, 243, 165, 237));
+        chcWhere.setPreferredSize(new Dimension(120, 28));
+        chcWhere.setSelected(true);
+        gbc.gridx = 1;
+        gbc.gridy = 11;
+        pnlComponent.add(chcWhere, gbc);
+
+
+
+    }
+
+
+    //GETTERS
+
+
+    public JPanel getPnlComponent() {
+        return pnlComponent;
+    }
 }
