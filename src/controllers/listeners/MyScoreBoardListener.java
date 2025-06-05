@@ -1,13 +1,19 @@
 package controllers.listeners;
 
+import models.Database;
 import models.Model;
 import models.ScoreData;
 import views.View;
 import views.dialogs.ScoreBoardDialog;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,14 +34,69 @@ public class MyScoreBoardListener implements ActionListener {
         //System.out.println(" Edetabel nuppu vajutati ");
         ArrayList<ScoreData> result;
         if(view.getRdoFile().isSelected()){ // File
-            result = model.readFromFile(); // Loe faili sisu massiivi
+            result = model.readFromFile();  // Loe faili sisu massiivi
             if(createTable(result)){
                 setupDlgScoreBoard();
-
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(view, "Andmeid pole");
             }
+        } else { // Andmebaasi osa
+            try(Database db = new Database(model)){
+                result = db.select(model.getBoardSize());
+                if(!result.isEmpty() && createTableDb(result)){
+                    setupDlgScoreBoard();
+                } else {
+                    JOptionPane.showMessageDialog(view, "Andmbaasi tabel on tühi");
+                }
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
         }
+    }
+
+    private boolean createTableDb(ArrayList<ScoreData> result) {
+        if(!result.isEmpty()){
+            String[][] data = new String[result.size()][5]; // Veergude arv on meil tabelis 5
+            for(int i = 0; i < result.size(); i++){
+                data[i][0] = result.get(i).getName();
+                data[i][1] = result.get(i).formatGameTime(result.get(i).getTime());
+                data[i][2] = String.valueOf(result.get(i).getClicks());
+                data[i][3] = String.valueOf(result.get(i).getBoard());
+                data[i][4] = result.get(i).getPlayedTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+            }
+            // Loome read-only TableModel(topelklikk lahtris võimatu)
+            DefaultTableModel tableModel = new DefaultTableModel(data, model.getColumnNames()){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;  // Ei luba lahtri sisu muuta
+                }
+            };
+            JTable table = new JTable(tableModel);
+
+            // TODO tabeli klikkimine
+
+            //  Tabeli päis rasvaseks
+            JTableHeader header = table.getTableHeader();
+            Font headerFont = header.getFont().deriveFont(Font.BOLD);
+            header.setFont(headerFont);
+
+            int[] columnWidths = {100,120,80,90,150};
+            for(int i = 0; i < columnWidths.length; i++){
+                table.getColumnModel().getColumn(i).setPreferredWidth(columnWidths[i]);
+            }
+            // Joondame alates teisest veerust paremale serva
+            DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+            rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+            for(int i = 0; i < model.getColumnNames().length; i++){
+                table.getColumnModel().getColumn(i).setCellRenderer(rightRenderer);
+            }
+            dlgScoreBoard = new ScoreBoardDialog(view);
+            JScrollPane scrollPane = new JScrollPane(table);
+            dlgScoreBoard.add(scrollPane);
+            dlgScoreBoard.setTitle("Edetabel Andmebaas");
+            return true;
+        }
+        return false;
     }
 
     private boolean createTable(ArrayList<ScoreData> result) {
@@ -73,4 +134,5 @@ public class MyScoreBoardListener implements ActionListener {
         dlgScoreBoard.setVisible(true);
     }
 
-}
+
+} // Lõpp
