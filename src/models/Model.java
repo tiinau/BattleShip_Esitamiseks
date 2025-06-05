@@ -1,12 +1,16 @@
 package models;
 
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Model {
     private int boardSize = 10; // Vaikimisi laua suurus
     private ArrayList<GridData> gridData; // Loome listi
     private Game game;
+    // Edetabeli failiga seotud muutujad
+    private String scoreFile = "scores.txt";
+    private String[] columnNames = new String[]{"Nimi", "Aeg", "Klikke", "Laua suurus", "Mängu aeg"};
 
     public Model() {
         gridData = new ArrayList<>(); // See hakkab hoidma ridade, veergude, x,y kordinaatide jne infot
@@ -106,6 +110,33 @@ public class Model {
         }
     }
 
+    /**
+     * Edetabeli faili olemasolu ja sisu kontroll
+     * @return true kui korras ja false kui pole
+     */
+    public boolean checkFileExistsAndContent(){
+        File file = new File(scoreFile);
+        if(!file.exists()) { // Kui faili pole, siis tagastab false
+            return false;
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(scoreFile))) {
+            String line = br.readLine(); // Loeme rea
+            if(line == null) {
+                return false; // Ridu pole üldse
+            }
+
+            String[] columns = line.split(";");
+            return columns.length == columnNames.length;  // Lihtsustatud if lause
+
+
+
+        } catch (IOException e) {
+            // throw new RuntimeException(e);
+            return false;
+        }
+    }
+
 
 
     //GETTERS
@@ -121,6 +152,15 @@ public class Model {
     public Game getGame() {
         return game;
     }
+
+    public String getScoreFile() {
+        return scoreFile;
+    }
+
+    public String[] getColumnNames() {
+        return columnNames;
+    }
+
 
     //SETTERS
 
