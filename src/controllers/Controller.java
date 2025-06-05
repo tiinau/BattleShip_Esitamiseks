@@ -8,6 +8,9 @@ import views.View;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Controller implements MouseListener, MouseMotionListener {
     private Model model;
@@ -67,10 +70,57 @@ public class Controller implements MouseListener, MouseMotionListener {
         if(model.getGame() != null && model.getGame().isGameOver()) {
             gameTimer.stop(); // Peata aeg
             view.getBtnNewGame().setText("Uus mäng"); // Nupu tekst muutub tagasi: enne "Katkesta", pärast "uus mäng"
-            JOptionPane.showMessageDialog(view, "Mängu aeg: " + gameTimer.formatGameTime());
+            //JOptionPane.showMessageDialog(view, "Mängu aeg: " + gameTimer.formatGameTime()); // Teatab mängu lõpus
+            // Küsime kasutaja nime
+            String name = JOptionPane.showInputDialog(view, "Kuidas on admirali nimi?", "Mäng on läbi", JOptionPane.INFORMATION_MESSAGE);
+            if (name == null){  // Cancel või akna sulgemine
+                name = "Teadmata";
+            }
+            if(name.trim().isEmpty()) {
+                name = "Teadmata"; // kui aksutaja ei sisestanud nime
+            }
+            // TODO edetabeli faili ja andmebaasi lisamine (kaks eraldi rida)
+            saveEntryToFile(name.trim());  // Edetabeli faili kirjutamine
         }
     }
 
+    public void saveEntryToFile(String name) {
+        if(model.checkFileExistsAndContent()){ // NB!
+            // Fail on olemas, kirjutame sisu faili
+            File file = new File(model.getScoreFile());
+            try(FileWriter fw = new FileWriter(file, true)){
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter pw = new PrintWriter(bw);
+                int time = gameTimer.getElapsedSeconds();
+                int clicks = model.getGame().getClickCounter();
+                int board = model.getBoardSize();
+                String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                String datLine = String.join(";", name, String.valueOf(time), String.valueOf(clicks),  String.valueOf(board), dateTime);
+                pw.println(datLine); // Kirjuta faili
+                pw.close();  // Sulge fail
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }else{  // Edetabeli faili ei leitud või sisu puudub
+            File file = new File(model.getScoreFile());
+            try(FileWriter fw = new FileWriter(file, true)){
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter pw = new PrintWriter(bw);
+                pw.println(String.join(";", model.getColumnNames())); // UUS
+                int time = gameTimer.getElapsedSeconds();
+                int clicks = model.getGame().getClickCounter();
+                int board = model.getBoardSize();
+                String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                String datLine = String.join(";", name, String.valueOf(time), String.valueOf(clicks),  String.valueOf(board), dateTime);
+                pw.println(datLine); // Kirjuta faili
+                pw.close();  // Sulge fail
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+
+        }
+    }
     @Override
     public void mousePressed(MouseEvent e) { //Kasutamata meetod, aga peab olemas olema
 
