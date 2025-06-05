@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 public class MyScoreBoardListener implements ActionListener {
     private Model model;
@@ -88,7 +89,12 @@ public class MyScoreBoardListener implements ActionListener {
                         for (int i = 0; i < table.getColumnCount(); i++) {
                             rowData.append(table.getValueAt(row, i)).append(" | ");
                         }
-                        JOptionPane.showMessageDialog(table, "Valitud rida: \n" + rowData);
+                        JOptionPane.showMessageDialog(table, "Valitud rida:\n" + rowData);
+
+                        // Ainult lahtri sisu
+                        Object cellObject = table.getValueAt(row,col);
+                        JOptionPane.showMessageDialog(table, "Valitud lahter:\n " + cellObject);
+
                     }
                 }
             });
