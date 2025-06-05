@@ -37,8 +37,38 @@ public class Controller implements MouseListener, MouseMotionListener {
 
 
     @Override
-    public void mouseClicked(MouseEvent e) { // seda kasutame
+    public void mouseClicked(MouseEvent e) { // Kasutame
+        if(gameTimer.isRunning()) { // Kas toimub mäng
+            // Kuhu klikiti hiirega
+            int id = model.checkGridIndex(e.getX(), e.getY());
+            int row = model.getRowById(id);
+            int col = model.getColById(id);
+            // Hetke laud
+            int[][] matrix = model.getGame().getBoardMatrix();
+            model.getGame().setClickCounter(1); // Kliki lugeja
+            if(matrix[row][col] == 0) {         // 0 on vesi, ehk mööda
+                model.getGame().setUserClick(row,col,8);
+                //view.getLblShip().setText(String.format("%d / %d", model.getGame().getShipsCounter(), model.getGame().getShipsParts()));
+            } else if (matrix[row][col] >= 1 && matrix[row][col] <= 5) { // Laevale pihtas
+                model.getGame().setUserClick(row,col,7);
+                model.getGame().setShipsCounter(1);  // Laeva osade leidmine
+                view.getLblShip().setText(String.format("%d / %d", model.getGame().getShipsCounter(), model.getGame().getShipsParts()));
+            }
+            // Näita konsooli mängulauda
+            model.getGame().showGameBoard();
+            // Uuenda joonsitust
+            view.repaint();
+            // Kontrolli mängu lõppu
+            checkGameOver();
+        }
+    }
 
+    private void checkGameOver(){
+        if(model.getGame() != null && model.getGame().isGameOver()) {
+            gameTimer.stop(); // Peata aeg
+            view.getBtnNewGame().setText("Uus mäng"); // Nupu tekst muutub tagasi: enne "Katkesta", pärast "uus mäng"
+            JOptionPane.showMessageDialog(view, "Mängu aeg: " + gameTimer.formatGameTime());
+        }
     }
 
     @Override

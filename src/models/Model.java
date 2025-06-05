@@ -1,5 +1,6 @@
 package models;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Model {
@@ -53,11 +54,59 @@ public class Model {
         return -1; //Viga
     }
 
-
-
     public void setupNewGame(){
         game = new Game(boardSize);
     }
+
+    public void drawUserBoard(Graphics g) { // antakse kaasa joonistuslaud
+        ArrayList<GridData> gdList = getGridData(); // See loodi laua joonistamisel
+        int[][] matrix = game.getBoardMatrix(); // See on laevade, vee jm info (0, 1-5, 7, 8)
+
+        for(GridData gd : gdList) {
+            int row = gd.getRow(); // Rida
+            int col = gd.getCol(); // Veerg
+            int cellValue = matrix[row][col]; // Väärtus: 0, 1-5, 7, 8
+
+            // Määrame värvi ja suuruse sõltuvalt lahtri väärtusest (cellValue)
+            Color color = null;  // Algset värvi pole
+            int padding = 0;
+
+            switch(cellValue) { // 0, 1-5,7, 8
+                case 0: // Vesi
+                    color = new Color(0,190,255);
+                    break;
+                case 7:
+                    color = Color.GREEN; // Laev
+                    break;
+                case 8:
+                    color = Color.RED;
+                    padding = 3;
+                    break;
+                default:
+                    if(cellValue >=1 && cellValue <=5) { // laevad 1-5
+                        // Kommewnteeri välja kui ei soovi laevu mängulaual näha
+                        //color = new Color(236, 236, 137); // siin asuvad laevad tegelikult SOBI TEGEMISEKS
+                        color = new Color(0,190,255); // siin asuvad laevad tegelikult
+
+
+                    }
+
+            }
+
+            // Kui värv on määratud, joonista ruut
+            if(color != null) {
+                g.setColor(color);
+                g.fillRect(
+                        gd.getX()+padding,
+                        gd.getY()+padding,
+                        gd.getWidth()-2 * padding,
+                        gd.getHeight()-2 * padding
+                );
+            }
+        }
+    }
+
+
 
     //GETTERS
 

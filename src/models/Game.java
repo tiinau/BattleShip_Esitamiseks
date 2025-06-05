@@ -131,6 +131,21 @@ public class Game {
         int endCol = Math.min(boardSize - 1, vertical ? col + 1 : col + length);
         return new Area(startRow, endRow, startCol, endCol);
     }
+
+    /**
+     * Selles lahtris klikkis kasutaja hiirega, kas sai piuhta või läks mööda
+     * @param row rida
+     * @param col veerg
+     * @param what millega tegu (7 pihtas, 8 mööda)
+     */
+    public  void setUserClick(int row, int col, int what) {
+        if (what== 7) {
+            boardMatrix[row][col] = 7; // Pihtas
+        }else if (what== 8) {
+            boardMatrix[row][col] = 8; // Möödas
+        }
+    }
+
     // GETTERS
 
     public int[][] getBoardMatrix() {
@@ -152,4 +167,34 @@ public class Game {
     public int getShipsParts(){
         return IntStream.of(ships).sum();
     }
+
+    /**
+     * Kas mäng on läbi
+     * @return true -läbi ja false- ei ole läbi
+     */
+    public boolean isGameOver() {
+        return getShipsParts() == getShipsCounter(); // võrdsed siis true ja rinev siis false
+    }
+
+
+    // SETTERS
+
+    /**
+     * Suurendab leitud laevade hulka etteantud väärtuse võrra
+     * @param shipsCounter etteantud väärtus (1)
+     */
+    public void setShipsCounter(int shipsCounter) { // kui leitakse , siis kasvab ühe võrra
+        this.shipsCounter += shipsCounter;          // kasvamine sõltub sellest, mis väärtus enne oli
+    }
+
+    /**
+     * Suurendab leitud klikkide hulka etteantud väärtuse võrra
+     * @param clickCounter
+     */
+    public void setClickCounter(int clickCounter) { // kui leitakse kasvab ühe võrra
+        this.clickCounter += clickCounter;          // kasvamine sõltub sellest, mis väärtus enne oli
+    }
+
+
+
 }

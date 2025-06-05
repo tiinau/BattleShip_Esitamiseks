@@ -42,9 +42,9 @@ public class InfoBoard  extends JPanel {
         // setLayout(new FlowLayout(FlowLayout.LEFT)); // Algne layout
         setLayout(new BorderLayout()); // Uus layout, selleks et venitaks selle kollase paneeli suuremaks
         setPreferredSize(new Dimension(400, 188));
-        setBackground(new Color(164, 241, 248));
+        setBackground(new Color(0,190,255));
 
-        pnlComponent.setBackground(new Color(244, 243, 165)); // Sellele paneelile lähevad kõik labelid (hiire liikumine, laua suurus, nupud jne)
+        pnlComponent.setBackground(new Color(236, 236, 137)); // Sellele paneelile lähevad kõik labelid (hiire liikumine, laua suurus, nupud jne)
 
         gbc.anchor = GridBagConstraints.WEST; // Määrame kuhu need labelid tulevad - vasakule
         gbc.insets = new Insets(2, 2, 2, 2); // Määrad palju jätad ruumi ümber labelite
