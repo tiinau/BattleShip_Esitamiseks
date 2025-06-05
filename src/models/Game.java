@@ -7,9 +7,9 @@ public class Game {
     private int boardSize; // Mängulaua suurus vaikimisi 10x10
     private int[][] boardMatrix; // Mängulaual asuvad laevad
     private Random random = new Random();
-    //private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1}; // Laevade pikkused
-    //private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1}; // Laevade pikkused
-    private int[] ships = {4, 3, 3, 2, 2, 2, 1, 1, 1, 1}; // Laevade pikkused
+    //private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};  // Laevade pikkused
+    private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};  // Laevade pikkused
+    //private int[] ships = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};      // Laevade pikkused
     private int shipsCounter = 0;
     private int clickCounter = 0; //klikkide lugemine
 
@@ -53,7 +53,7 @@ public class Game {
                     int c = (startCol + cOffset) % boardSize;
 
                     boolean vertical = random.nextBoolean(); // Määrame juhusliku suuna
-                    if (tryPlaceShip(r, c, length, vertical || tryPlaceShip(r, c, length, !vertical))) {
+                    if (tryPlaceShip(r, c, length, vertical ) || tryPlaceShip(r, c, length, !vertical)) {
                         placed = true; // Laev paigutatud
                         break outerLoop; // Katkesta mõlemad for loop kordused
                     }
@@ -117,7 +117,7 @@ public class Game {
         // Kontrollime igat lahtrit alal  - kuskil pole tühjust, (0), katkestame
         for (int r = area.startRow; r <= area.endRow; r++) {
             for (int c = area.startCol; c <= area.endCol; c++) {
-                if (boardMatrix[r][c] != 0) return false; // Midagi on ees, ei sobi
+                if (boardMatrix[r][c] > 0 && boardMatrix[r][c] <=5) return false; // Midagi on ees, ei sobi
             }
         }
         return true;  // Kõik kohad olid vabad
@@ -131,7 +131,7 @@ public class Game {
         int endCol = Math.min(boardSize - 1, vertical ? col + 1 : col + length);
         return new Area(startRow, endRow, startCol, endCol);
     }
- // GETTERS
+    // GETTERS
 
     public int[][] getBoardMatrix() {
         return boardMatrix;

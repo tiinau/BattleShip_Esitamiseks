@@ -22,7 +22,7 @@ public class MyNewGameListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Test  System.out.println(" konsoolis tekst - Uus mäng");
+        // System.out.println("TEST konsoolis tekst - Uus mäng"); // Konsooli  test
         if(!gameTimer.isRunning()) { // Mäng ei käi
             // See on uus lahendus , mängu kujundus taustal, mitte kohe ekraanil
             new Thread(() -> {
