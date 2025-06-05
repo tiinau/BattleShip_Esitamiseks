@@ -2,13 +2,17 @@ package controllers;
 
 import controllers.listeners.MyComboBoxListener;
 import controllers.listeners.MyNewGameListener;
+import controllers.listeners.MyScoreBoardListener;
+import models.Database;
 import models.GameTimer;
 import models.Model;
 import views.View;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.event.*;
 import java.io.*;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -36,6 +40,7 @@ public class Controller implements MouseListener, MouseMotionListener {
         //Listenerid
         view.registerComboBox(new MyComboBoxListener(model, view)); //Lisab comboboxi asjad faili listeneri kaustas
         view.registerNewGameButton(new MyNewGameListener(model, view, gameTimer)); //nupu vajutuse kuulaja
+        view.registerScoreBoardButton(new MyScoreBoardListener(model, view));
     }
 
 
@@ -81,6 +86,18 @@ public class Controller implements MouseListener, MouseMotionListener {
             }
             // TODO edetabeli faili ja andmebaasi lisamine (kaks eraldi rida)
             saveEntryToFile(name.trim());  // Edetabeli faili kirjutamine
+            // Andmebaasi lisamine
+            saveEntryToTable(name.trim());
+        }
+    }
+
+    private void saveEntryToTable(String name) {
+        try(Database db = new Database(model)){
+            db.insert(name, gameTimer.getElapsedSeconds(), model.getGame().getClickCounter(),
+                    model.getBoardSize(),
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

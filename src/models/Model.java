@@ -13,6 +13,10 @@ public class Model {
     // Edetabeli failiga seotud muutujad
     private String scoreFile = "scores.txt";
     private String[] columnNames = new String[]{"Nimi", "Aeg", "Klikke", "Laua suurus", "Mängu aeg"};
+    // Edetabeli andmebaasiga seotud muutujad
+    private String scoreDatabase = "scores.db";
+    private String scoreTable = "scores"; // Tabeli nimi
+
 
     public Model() {
         gridData = new ArrayList<>(); // See hakkab hoidma ridade, veergude, x,y kordinaatide jne infot
@@ -96,10 +100,7 @@ public class Model {
                         // Kommewnteeri välja kui ei soovi laevu mängulaual näha
                         color = new Color(236, 236, 137); // siin asuvad laevad tegelikult              SOBI TEGEMISEKS
                         // color = new Color(0, 190, 255); // siin asuvad laevad tegelikult                     AUS MÄNGIMINE
-
-
                     }
-
             }
 
             // Kui värv on määratud, joonista ruut
@@ -196,6 +197,14 @@ public class Model {
 
     public String[] getColumnNames() {
         return columnNames;
+    }
+
+    public String getScoreDatabase() {
+        return scoreDatabase;
+    }
+
+    public String getScoreTable() {
+        return scoreTable;
     }
 
 

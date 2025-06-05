@@ -25,7 +25,7 @@ public class Game {
         System.out.println();           // Tühi rida
         for (int row = 0; row < boardSize; row++) {
             for (int col = 0; col < boardSize; col++) {
-                System.out.print(boardMatrix[row][col] + " ");
+                //System.out.print(boardMatrix[row][col] + " ");
             }
             System.out.println(); // Veeru lõpus uuele reale
         }
