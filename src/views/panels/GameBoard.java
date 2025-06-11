@@ -1,11 +1,10 @@
 package views.panels;
 
-import models.GridData;
-import models.Model;
-
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import javax.swing.*;
+import models.GridData;
+import models.Model;
 
 public class GameBoard extends JPanel {
     private Model model; // Anname mudeli kaasa
@@ -36,7 +35,7 @@ public class GameBoard extends JPanel {
         drawColumnAlphabet(g);
         drawRowColumn(g);
 
-        // Alati kuva mängu pilt, kui mängon olemas
+        // Alati kuva mängu pilt, kui mäng on olemas
         if(model.getGame() != null) {
             model.drawUserBoard(g);
         }

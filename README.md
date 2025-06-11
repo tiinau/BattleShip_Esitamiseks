@@ -10,7 +10,7 @@
    (vt GameBoard failis  getPreferredSize())
 6. "Eraldi aknas" pole valitud, siis ilmub tekst vaate peale, mitte eraldi message aknasse
    Koos Nupuga sulgemiseks!
-7. näiteks: edetabel kollases alas, siis muud elemendid enam ei paista
+   näiteks: edetabel kollases alas, siis muud elemendid enam ei paista
    näiteks: kolmas paneel java aknas, kus edetabel sees (paneel ainult edetabeli jaoks.. ?)
    näiteks olemasoleva JFrame peal eraldi, ise valin, kuidas teen... flow layoutmanager?
 
@@ -22,5 +22,6 @@
 1. "Edetabel" ja "Vali laua suurus" mitteaktiivsed mängu ajal. 
  (_'MyNewGameListener'_ - nupud mittekatiivseks mängu ajal  ning _'Controller'_ - tagasi aktiivseks).
 2. Mängu pilt jääb ekraanile, kui mäng lõppeb ja küsitakse nime. 
-  _'GameBoard'_ _if_ lausest eemaldasin '&&' osa. 
+  _'GameBoard'_ failis _paintComponent_ - if lausest eemaldasin '&&' osa. 
 3. Kui muudetakse laua suurust, siis eelmine mäng eemaldatakse. _'Model'_  _setter_  mäng 'null'.
+4. Mänguaknal miinimum suuruse seadmine 10*10. _'View'_ failis lisasin 'gameBoard.getPreferredSize'

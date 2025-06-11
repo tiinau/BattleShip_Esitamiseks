@@ -1,14 +1,13 @@
 package views;
 
 import controllers.Controller;
-import models.Model;
-import views.panels.GameBoard;
-import views.panels.InfoBoard;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import javax.swing.*;
+import models.Model;
+import views.panels.GameBoard;
+import views.panels.InfoBoard;
 
 public class View extends JFrame {
     private Model model;
@@ -16,19 +15,20 @@ public class View extends JFrame {
     private InfoBoard infoBoard; // Infotahvel
 
     public View(Model model) {
-        super("Laevade pommitamine"); // Pealkiri, supper laseb kogu frame sisu kasutada
+        super("Laevade pommitamine");       // Pealkiri, supper laseb kogu frame sisu kasutada
         this.model = model;
+        this.gameBoard = new GameBoard(model);
 
-        gameBoard = new GameBoard(model); // Loome mängulaua
-        infoBoard = new InfoBoard(); // Loome infotahvli
+        infoBoard = new InfoBoard();            // Loome infotahvli
 
-        JPanel container = new JPanel(new BorderLayout()); // Loome uue paneeli
-        container.add(gameBoard, BorderLayout.CENTER); // Paneme paneeli peale mängulaua ujuvale osale
-        container.add(infoBoard, BorderLayout.EAST); // Paneme paneeli peale infotahvli idasse
+        JPanel container = new JPanel(new BorderLayout());  // Loome uue paneeli
+        container.add(gameBoard, BorderLayout.CENTER);      // Paneme paneeli peale mängulaua ujuvale osale
+        container.add(infoBoard, BorderLayout.EAST);        // Paneme paneeli peale infotahvli idasse
 
-        add(container); // Paneme konteineri peale
+        add(container);                                     // Paneme konteineri peale
+        setMinimumSize(gameBoard.getPreferredSize());      // Akna miinimumsuuruse lisamine
 
-        //TEST Frame ja Panel Layout Managerid
+        // TEST Frame ja Panel Layout Managerid
 //        System.out.println("JFrame:        " + this.getLayout());
 //        System.out.println("container:     " + container.getLayout());
 //        System.out.println("GameBoard:     " + gameBoard.getLayout());
@@ -85,11 +85,11 @@ public class View extends JFrame {
     }
 
     public void registerGameBoardMouse(Controller controller) {
-        gameBoard.addMouseListener(controller); // Hiire kuulamine. Võtame mängulaualt selle hiire liikumise
+        gameBoard.addMouseListener(controller);                 // Hiire kuulamine. Võtame mängulaualt selle hiire liikumise
         gameBoard.addMouseMotionListener(controller);
     }
-    public void registerComboBox(ItemListener itemListener) { //Registreerib endale selle valiku, mis on tehtud comboboxis
-        infoBoard.getCmbSize().addItemListener(itemListener); //Hiire liikumine
+    public void registerComboBox(ItemListener itemListener) {   //Registreerib endale selle valiku, mis on tehtud comboboxis
+        infoBoard.getCmbSize().addItemListener(itemListener);   //Hiire liikumine
     }
 
     public void registerNewGameButton(ActionListener actionListener) {
