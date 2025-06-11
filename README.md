@@ -15,3 +15,7 @@
    näiteks olemasoleva JFrame peal eraldi, ise valin, kuidas teen... flow layoutmanager?
 
 **Kui on küsimusi, siis küsida Õpetajalt Teamsis Chat ...** 
+
+# Muudatused
+
+1. "Edetabel" ja "Vali laua suurus" mitteaktiivsed mängu ajal. ('MyNewGameListener' - false  Controller - tagasi aktiivseks ) 

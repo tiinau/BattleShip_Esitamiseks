@@ -3,18 +3,15 @@ package controllers;
 import controllers.listeners.MyComboBoxListener;
 import controllers.listeners.MyNewGameListener;
 import controllers.listeners.MyScoreBoardListener;
+import java.awt.event.*;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.*;
 import models.Database;
 import models.GameTimer;
 import models.Model;
 import views.View;
-
-import javax.swing.*;
-import javax.xml.crypto.Data;
-import java.awt.event.*;
-import java.io.*;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Controller implements MouseListener, MouseMotionListener {
     private Model model;
@@ -34,12 +31,9 @@ public class Controller implements MouseListener, MouseMotionListener {
         });
         guiTimer.start(); //Käivitab GUI taimeri aga mängu aega (Gametimer) mitte!
 
-
-
-
-        //Listenerid
-        view.registerComboBox(new MyComboBoxListener(model, view)); //Lisab comboboxi asjad faili listeneri kaustas
-        view.registerNewGameButton(new MyNewGameListener(model, view, gameTimer)); //nupu vajutuse kuulaja
+        // Listenerid
+        view.registerComboBox(new MyComboBoxListener(model, view));                // Lisab comboboxi asjad faili listeneri kaustas
+        view.registerNewGameButton(new MyNewGameListener(model, view, gameTimer)); // Nupu vajutuse kuulaja
         view.registerScoreBoardButton(new MyScoreBoardListener(model, view));
     }
 
@@ -73,21 +67,23 @@ public class Controller implements MouseListener, MouseMotionListener {
 
     private void checkGameOver(){
         if(model.getGame() != null && model.getGame().isGameOver()) {
-            gameTimer.stop(); // Peata aeg
-            view.getBtnNewGame().setText("Uus mäng"); // Nupu tekst muutub tagasi: enne "Katkesta", pärast "uus mäng"
-            //JOptionPane.showMessageDialog(view, "Mängu aeg: " + gameTimer.formatGameTime()); // Teatab mängu lõpus
+            gameTimer.stop();                           // Peata aeg
+            view.getBtnNewGame().setText("Uus mäng");   // Nupu tekst muutub tagasi: enne "Katkesta", pärast "uus mäng"
+            view.getBtnScoreBoard().setEnabled(true);   // Muuda 'Edetabel' nupp aktiivseks
+            view.getCmbSize().setEnabled(true);         // Muuda 'Vali laua suurus' combobox aktiivseks
+
+            // JOptionPane.showMessageDialog(view, "Mängu aeg: " + gameTimer.formatGameTime()); // Teatab mängu lõpus
             // Küsime kasutaja nime
-            String name = JOptionPane.showInputDialog(view, "Kuidas on admirali nimi?", "Mäng on läbi", JOptionPane.INFORMATION_MESSAGE);
-            if (name == null){  // Cancel või akna sulgemine
+            String name = JOptionPane.showInputDialog(view, "Kuidas on mängija nimi?", "Mäng on läbi", JOptionPane.INFORMATION_MESSAGE);
+            if (name == null){                         // Cancel või akna sulgemine
                 name = "Teadmata";
             }
             if(name.trim().isEmpty()) {
-                name = "Teadmata"; // kui aksutaja ei sisestanud nime
+                name = "Teadmata";                      // Kui kasutaja ei sisestanud nime
             }
-            // TODO edetabeli faili ja andmebaasi lisamine (kaks eraldi rida)
-            saveEntryToFile(name.trim());  // Edetabeli faili kirjutamine
-            // Andmebaasi lisamine
-            saveEntryToTable(name.trim());
+            // Edetabeli faili ja andmebaasi lisamine (kaks eraldi rida)
+            saveEntryToFile(name.trim());               // Edetabeli faili kirjutamine
+            saveEntryToTable(name.trim());              // Andmebaasi kirjutamine
         }
     }
 
@@ -118,7 +114,7 @@ public class Controller implements MouseListener, MouseMotionListener {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }else{  // Edetabeli faili ei leitud või sisu puudub
+        } else {  // Edetabeli faili ei leitud või sisu puudub
             File file = new File(model.getScoreFile());
             try(FileWriter fw = new FileWriter(file, true)){
                 BufferedWriter bw = new BufferedWriter(fw);
@@ -134,33 +130,27 @@ public class Controller implements MouseListener, MouseMotionListener {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-
         }
     }
+
     @Override
     public void mousePressed(MouseEvent e) { //Kasutamata meetod, aga peab olemas olema
-
     }
 
     @Override
     public void mouseReleased(MouseEvent e) { //Kasutamata meetod, aga peab olemas olema
-
     }
 
     @Override
     public void mouseEntered(MouseEvent e) { //Kasutamata meetod, aga peab olemas olema
-
     }
 
     @Override
     public void mouseExited(MouseEvent e) { //Kasutamata meetod, aga peab olemas olema
-
     }
 
     @Override
     public void mouseDragged(MouseEvent e) { //Kasutamata meetod, aga peab olemas olema
-
     }
 
     @Override
@@ -169,14 +159,14 @@ public class Controller implements MouseListener, MouseMotionListener {
         String mouse = String.format("x=%03d & y=%03d", e.getX(), e.getY());
         view.getLblMouseXY().setText(mouse);
 
-        // TODO Loe id, row ja col infot
+        // Loe id, row ja col infot
         int id = model.checkGridIndex(e.getX(), e.getY());
         int row = model.getRowById(id);
         int col = model.getColById(id);
         if(id != -1) {
             view.getLblID().setText(String.valueOf(id + 1)); //Näitamine inimlikult 1 jne
         }
-        //Paneb paneelile rea ja veeru numbrid
+        // Paneb paneelile rea ja veeru numbrid
         // view.getLblRowCol().setText(String.valueOf(row + 1 + "/" + (col+1))); //minu variant
         String rowcol = String.format("%d : %d", row +1, col +1);
         if(row == -1 || col == -1) {
@@ -184,6 +174,4 @@ public class Controller implements MouseListener, MouseMotionListener {
         }
         view.getLblRowCol().setText(rowcol);
     }
-
-
 }
