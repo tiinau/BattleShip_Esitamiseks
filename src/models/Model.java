@@ -175,7 +175,7 @@ public class Model {
     }
 
 
-    //GETTERS
+    // GETTERS
 
     public int getBoardSize() {
         return boardSize;
@@ -206,7 +206,7 @@ public class Model {
     }
 
 
-    //SETTERS
+    // SETTERS
 
     public void setBoardSize(int boardSize) {
         this.boardSize = boardSize;

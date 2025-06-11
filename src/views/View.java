@@ -14,20 +14,21 @@ public class View extends JFrame {
     private GameBoard gameBoard;
     private InfoBoard infoBoard;
     private JPanel leaderboardPanelRef; // Uus paneel edetabeli vaatamiseks
+    private JPanel container; // Add this field
 
     public View(Model model) {
-        super("Laevade pommitamine");       // Pealkiri, supper laseb kogu frame sisu kasutada
+        super("Laevade pommitamine");
         this.model = model;
         this.gameBoard = new GameBoard(model);
 
-        infoBoard = new InfoBoard();            // Loome infotahvli
+        infoBoard = new InfoBoard();
 
-        JPanel container = new JPanel(new BorderLayout());  // Loome uue paneeli
-        container.add(gameBoard, BorderLayout.CENTER);      // Paneme paneeli peale mängulaua ujuvale osale
-        container.add(infoBoard, BorderLayout.EAST);        // Paneme paneeli peale infotahvli idasse
+        container = new JPanel(new BorderLayout()); // Assign to the field
+        container.add(gameBoard, BorderLayout.CENTER);
+        container.add(infoBoard, BorderLayout.EAST);
 
-        add(container);                                     // Paneme konteineri peale
-        setMinimumSize(gameBoard.getPreferredSize());      // Akna miinimumsuuruse lisamine
+        add(container);
+        setMinimumSize(gameBoard.getPreferredSize());
 
         // TEST Frame ja Panel Layout Managerid
 //        System.out.println("JFrame:        " + this.getLayout());
@@ -104,23 +105,26 @@ public class View extends JFrame {
     // Peaaknas Edetabeli vaatamine
     public void showLeaderboardInMainWindow(JPanel leaderboardPanel) {
         leaderboardPanel.setLayout(new FlowLayout());
-        JButton closeBtn = new JButton("Sulge"); // Nupp edetabeli sulgemiseks
+        JButton closeBtn = new JButton("Sulge");
         leaderboardPanel.add(closeBtn);
 
-        // Paiguta Edetabel paremale
-        this.getContentPane().remove(infoBoard);
-        this.getContentPane().add(leaderboardPanel, BorderLayout.EAST);
-        leaderboardPanelRef = leaderboardPanel; 
+        // Remove InfoBoard if present
+        container.remove(infoBoard);
+        // Remove previous leaderboard if present
+        if (leaderboardPanelRef != null) {
+            container.remove(leaderboardPanelRef);
+        }
+        container.add(leaderboardPanel, BorderLayout.EAST);
+        leaderboardPanelRef = leaderboardPanel;
 
-        this.revalidate();
-        this.repaint();
+        container.revalidate();
+        container.repaint();
 
         closeBtn.addActionListener(e -> {
-            // Sulgemisel eemalda Edetabel nii, et infotahvel jääks paremale
-            this.getContentPane().remove(leaderboardPanelRef);
-            this.getContentPane().add(infoBoard, BorderLayout.EAST);
-            this.revalidate();
-            this.repaint();
+            container.remove(leaderboardPanelRef);
+            container.add(infoBoard, BorderLayout.EAST);
+            container.revalidate();
+            container.repaint();
         });
     }
 }
