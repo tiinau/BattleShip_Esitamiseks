@@ -19,6 +19,11 @@
 
 # Muudatused
 
+**Programmi testimiseks** on laevade asukohad värvitud nähtavaks ja laevade arv on vähendatud
+AUSALT MÄNGIMISEKS tuleks teha muudatused: 
+a) failis 'Game' kus saab laevade hulka muuta kui rida 11 (kommenteeri välja) ja realt 12 (eemalda kommentaar)
+b) failis 'Model' saab muuta värvi kui asendada rida 101 (kommenteeri välja) reaga 102 (eemalda kommentaar)
+
 1. "Edetabel" ja "Vali laua suurus" mitteaktiivsed mängu ajal. 
  (_'MyNewGameListener'_ - nupud mittekatiivseks mängu ajal  ning _'Controller'_ - tagasi aktiivseks).
 2. Mängu pilt jääb ekraanile, kui mäng lõppeb ja küsitakse nime. 
@@ -26,9 +31,10 @@
 3. Kui muudetakse laua suurust, siis eelmine mäng eemaldatakse. _'Model'_ failis setteri lisamine
 4. Mänguaknal miinimum suuruse seadmine 10*10. _'View'_ failis lisasin 'gameBoard.getPreferredSize'
 5. Edetabel mängu akanas koos "Sulge" nupuga. Mis võimaldab vaadata edetabelit kuni vajutatakse "Sulge" nuppu.
-'View' failis - a) Lisatud uus paneel edetabeli vaatamiseks (JPanel 'leaderboardPanelRef')
-'View' failis - b) Lisatud uus meetod - (showLeaderboardInMainWindow(JPanel leaderboardPanel))
-'MyScoreBoardListener' failis - muudetud meetodit 'actionPerformed' 
-if muudatus (andmed loetakse kas failist või andmebaasist, sõltuvalt kus on valik)
+_'View'_ failis - a) Lisatud uus paneel edetabeli vaatamiseks (_JPanel 'leaderboardPanelRef'_)
+_'View'_ failis - b) Lisatud uus meetod - _(showLeaderboardInMainWindow(JPanel leaderboardPanel))_
+_'MyScoreBoardListener'_ failis - muudetud meetodit _'actionPerformed'_ 
+if koodi osas muudatus. Andmed loetakse kas failist või andmebaasist, sõltuvalt kus on valik.
+
 
 
