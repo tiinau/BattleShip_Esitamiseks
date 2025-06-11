@@ -4,16 +4,16 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 public class Game {
-    private int boardSize; // Mängulaua suurus vaikimisi 10x10
-    private int[][] boardMatrix; // Mängulaual asuvad laevad
+    private int boardSize;          // Mängulaua suurus vaikimisi 10x10
+    private int[][] boardMatrix;    // Mängulaual asuvad laevad
     private Random random = new Random();
 
-    private int[] ships = {2, 1};                   // TEST KAHE LAEVAGA
-    //private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};  // Laevade pikkused
-    //private int[] ships = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};    // Laevade pikkused
+    private int[] ships = {2, 1};   // TEST KAHE LAEVAGA
+    //private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};  // Laevade valik
+    //private int[] ships = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};    // Laevade valik
 
     private int shipsCounter = 0;
-    private int clickCounter = 0; //klikkide lugemine
+    private int clickCounter = 0; // Klikkide lugemine
 
     public Game(int boardSize) {
         this.boardSize = boardSize;
@@ -35,12 +35,12 @@ public class Game {
 
     public void setupGameBoard() {
         boardMatrix = new int[boardSize][boardSize]; // Uus laua suurus ( algseis 0)
-        int shipsTotal = ships.length;  // Kui palju on laevu kokku
-        int shipsPlaced = 0;  // Kui palju on laevu paigutatud
-        // TODO hiljem lisam laevade järjekorra segamine
+        int shipsTotal = ships.length;              // Kui palju on laevu kokku
+        int shipsPlaced = 0;                        // Kui palju on laevu paigutatud
+        // Laevade järjekorra segamine
         while (shipsPlaced < shipsTotal) {
             int length = ships[shipsPlaced];  // Millist laeva paigutada (laeva pikkus)
-            boolean placed = false;    // Laevu pole paigutatud
+            boolean placed = false;           // Laevu pole paigutatud
 
             // Valime juhusliku rea ja veeru
             int startRow = random.nextInt(boardSize);   // Rida
@@ -49,15 +49,15 @@ public class Game {
             // Käime kogu laua läbi alates sellest punktist
             outerLoop:
             // Lihtsalt silt (label ) "for loop" - ile
-            for (int rOffset = 0; rOffset < boardSize; rOffset++) { // Rida
+            for (int rOffset = 0; rOffset < boardSize; rOffset++) {     // Rida
                 int r = (startRow + rOffset) % boardSize;
                 for (int cOffset = 0; cOffset < boardSize; cOffset++) { // Veerg
                     int c = (startCol + cOffset) % boardSize;
 
                     boolean vertical = random.nextBoolean(); // Määrame juhusliku suuna
                     if (tryPlaceShip(r, c, length, vertical ) || tryPlaceShip(r, c, length, !vertical)) {
-                        placed = true; // Laev paigutatud
-                        break outerLoop; // Katkesta mõlemad for loop kordused
+                        placed = true;      // Laev paigutatud
+                        break outerLoop;    // Katkesta mõlemad for loop kordused
                     }
                 }
             }
@@ -175,7 +175,7 @@ public class Game {
      * @return true -läbi ja false- ei ole läbi
      */
     public boolean isGameOver() {
-        return getShipsParts() == getShipsCounter(); // võrdsed siis true ja rinev siis false
+        return getShipsParts() == getShipsCounter(); // Võrdsed siis 'true' ja rinev siis 'false'
     }
 
 
@@ -185,15 +185,15 @@ public class Game {
      * Suurendab leitud laevade hulka etteantud väärtuse võrra
      * @param shipsCounter etteantud väärtus (1)
      */
-    public void setShipsCounter(int shipsCounter) { // kui leitakse , siis kasvab ühe võrra
-        this.shipsCounter += shipsCounter;          // kasvamine sõltub sellest, mis väärtus enne oli
+    public void setShipsCounter(int shipsCounter) { // Kui leitakse , siis kasvab ühe võrra
+        this.shipsCounter += shipsCounter;          // Kasvamine sõltub sellest, mis väärtus enne oli
     }
 
     /**
      * Suurendab leitud klikkide hulka etteantud väärtuse võrra
      * @param clickCounter
      */
-    public void setClickCounter(int clickCounter) { // kui leitakse kasvab ühe võrra
-        this.clickCounter += clickCounter;          // kasvamine sõltub sellest, mis väärtus enne oli
+    public void setClickCounter(int clickCounter) { // Kui leitakse kasvab ühe võrra
+        this.clickCounter += clickCounter;          // Kasvamine sõltub sellest, mis väärtus enne oli
     }
 }

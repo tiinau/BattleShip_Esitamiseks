@@ -1,26 +1,22 @@
 package controllers.listeners;
 
-import models.Database;
-import models.Model;
-import models.ScoreData;
-import views.View;
-import views.dialogs.ScoreBoardDialog;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Objects;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import models.Database;
+import models.Model;
+import models.ScoreData;
+import views.View;
+import views.dialogs.ScoreBoardDialog;
 
 public class MyScoreBoardListener implements ActionListener {
     private Model model;
@@ -34,25 +30,62 @@ public class MyScoreBoardListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //System.out.println(" Edetabel nuppu vajutati ");
-        ArrayList<ScoreData> result;
-        if (view.getRdoFile().isSelected()) { // File
-            result = model.readFromFile();  // Loe faili sisu massiivi
-            if (createTable(result)) {
-                setupDlgScoreBoard();
+        if (!view.getChcWhere().isSelected()) { // Kui "Eraldi aknas" EI ole valitud
+            JPanel leaderboardPanel = new JPanel();
+
+            ArrayList<ScoreData> result;
+            if (view.getRdoFile().isSelected()) {
+                result = model.readFromFile();
             } else {
-                JOptionPane.showMessageDialog(view, "Andmeid pole");
+                try (Database db = new Database(model)) {
+                    result = db.select(model.getBoardSize());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, "Viga andmebaasiga!");
+                    return;
+                }
             }
-        } else { // Andmebaasi osa
-            try (Database db = new Database(model)) {
-                result = db.select(model.getBoardSize());
-                if (!result.isEmpty() && createTableDb(result)) {
+
+            if (result == null || result.isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Andmeid pole");
+                return;
+            }
+
+            // Create table
+            String[][] data = new String[result.size()][5];
+            for (int i = 0; i < result.size(); i++) {
+                data[i][0] = result.get(i).getName();
+                data[i][1] = result.get(i).formatGameTime(result.get(i).getTime());
+                data[i][2] = String.valueOf(result.get(i).getClicks());
+                data[i][3] = String.valueOf(result.get(i).getBoard());
+                data[i][4] = result.get(i).getPlayedTime().format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+            }
+            JTable table = new JTable(data, model.getColumnNames());
+            JScrollPane scrollPane = new JScrollPane(table);
+
+            leaderboardPanel.add(scrollPane);
+
+            view.showLeaderboardInMainWindow(leaderboardPanel);
+        } else {
+            // Ava edetabel eraldi aknas nagu varem
+            ArrayList<ScoreData> result;
+            if (view.getRdoFile().isSelected()) {
+                result = model.readFromFile();
+                if (createTable(result)) {
                     setupDlgScoreBoard();
                 } else {
-                    JOptionPane.showMessageDialog(view, "Andmbaasi tabel on tühi");
+                    JOptionPane.showMessageDialog(view, "Andmeid pole");
                 }
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
+            } else {
+                try (Database db = new Database(model)) {
+                    result = db.select(model.getBoardSize());
+                    if (!result.isEmpty() && createTableDb(result)) {
+                        setupDlgScoreBoard();
+                    } else {
+                        JOptionPane.showMessageDialog(view, "Andmbaasi tabel on tühi");
+                    }
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }

@@ -11,8 +11,9 @@ import views.panels.InfoBoard;
 
 public class View extends JFrame {
     private Model model;
-    private GameBoard gameBoard; // Mängulaud
-    private InfoBoard infoBoard; // Infotahvel
+    private GameBoard gameBoard;
+    private InfoBoard infoBoard;
+    private JPanel leaderboardPanelRef; // Uus paneel edetabeli vaatamiseks
 
     public View(Model model) {
         super("Laevade pommitamine");       // Pealkiri, supper laseb kogu frame sisu kasutada
@@ -98,5 +99,28 @@ public class View extends JFrame {
 
     public void registerScoreBoardButton(ActionListener actionListener) {
         infoBoard.getBtnScoreBoard().addActionListener(actionListener);
+    }
+
+    // Peaaknas edetabeli vaatamine
+    public void showLeaderboardInMainWindow(JPanel leaderboardPanel) {
+        leaderboardPanel.setLayout(new FlowLayout());
+        JButton closeBtn = new JButton("Sulge");
+        leaderboardPanel.add(closeBtn);
+
+        // Remove InfoBoard and add leaderboardPanel to EAST
+        this.getContentPane().remove(infoBoard);
+        this.getContentPane().add(leaderboardPanel, BorderLayout.EAST);
+        leaderboardPanelRef = leaderboardPanel; // Save reference
+
+        this.revalidate();
+        this.repaint();
+
+        closeBtn.addActionListener(e -> {
+            // Remove leaderboard and restore InfoBoard
+            this.getContentPane().remove(leaderboardPanelRef);
+            this.getContentPane().add(infoBoard, BorderLayout.EAST);
+            this.revalidate();
+            this.repaint();
+        });
     }
 }

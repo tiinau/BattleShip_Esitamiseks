@@ -19,7 +19,6 @@ public class Database implements AutoCloseable {
         // Alustame ühendusega
         connect();
         ensureTableExists(); // Veendu et tabel on olemas, kui pole, siis teed
-
     }
 
     /**
@@ -35,7 +34,7 @@ public class Database implements AutoCloseable {
                 "game_time TEXT);";
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(createTableSql); // Loob tabeli kui pole
-            System.out.println("Tabel loodud/ kontrollitud: " + tableName); // TEST
+            //System.out.println("Tabel loodud / kontrollitud: " + tableName); // TEST
         } catch (SQLException e) {
             //throw new RuntimeException(e);
             System.err.println("Viga tabeli loomisel: " + e.getMessage());
@@ -45,7 +44,7 @@ public class Database implements AutoCloseable {
 
     private void connect() throws SQLException {
         connection = DriverManager.getConnection(dbUrl);
-        System.out.println("Ühendus loodud: " + dbUrl); // TEST
+       //System.out.println("Ühendus loodud: " + dbUrl); // TEST
     }
 
 
@@ -54,7 +53,7 @@ public class Database implements AutoCloseable {
         if (connection != null) {
             try {
                 connection.close(); // Sulge ühendus
-                System.out.println("ühendus suletud");  // TEST
+               // System.out.println("ühendus suletud");  // TEST
             } catch (SQLException e) {
                 //throw new RuntimeException(e);
                 System.err.println("Viga ühenduse sulgemisel: " + e.getMessage());
@@ -112,7 +111,4 @@ public class Database implements AutoCloseable {
         }
         return result;
     }
-
-
-
 }
