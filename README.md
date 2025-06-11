@@ -35,6 +35,9 @@ _'View'_ failis - a) Lisatud uus paneel edetabeli vaatamiseks (_JPanel 'leaderbo
 _'View'_ failis - b) Lisatud uus meetod - _(showLeaderboardInMainWindow(JPanel leaderboardPanel))_
 _'MyScoreBoardListener'_ failis - muudetud meetodit _'actionPerformed'_ 
 if koodi osas muudatus. Andmed loetakse kas failist või andmebaasist, sõltuvalt kus on valik.
+6. Taustapilt. 
+ Vasakule sinisele alale lisatud taustapilt "Background.jpg", mida näidatakse enne mänguga alustamist.
+ failis _'GameBoard'_ JPanel-il ja _paintComponendis_ if lause muudatus - kui pildifail on olemas, siis näidatakse pilti, kui ei siis sinist värvi.
 
 
 

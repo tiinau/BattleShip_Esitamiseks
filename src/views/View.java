@@ -14,16 +14,16 @@ public class View extends JFrame {
     private GameBoard gameBoard;
     private InfoBoard infoBoard;
     private JPanel leaderboardPanelRef; // Uus paneel edetabeli vaatamiseks
-    private JPanel container; // Add this field
+    private JPanel container;           // Edetabeli vaatamiseks samas aknas paremal
 
     public View(Model model) {
         super("Laevade pommitamine");
         this.model = model;
         this.gameBoard = new GameBoard(model);
 
-        infoBoard = new InfoBoard();
+        infoBoard = new InfoBoard();  // Mängu info laevade kohta... kollane ala
 
-        container = new JPanel(new BorderLayout()); // Assign to the field
+        container = new JPanel(new BorderLayout()); // Edetabelit ei vaata eraldi akanas, siis kasutame
         container.add(gameBoard, BorderLayout.CENTER);
         container.add(infoBoard, BorderLayout.EAST);
 
@@ -102,15 +102,15 @@ public class View extends JFrame {
         infoBoard.getBtnScoreBoard().addActionListener(actionListener);
     }
 
-    // Peaaknas Edetabeli vaatamine
+    // Peaaknas Edetabeli vaatamine mille juures on sulgemiseks nupp
     public void showLeaderboardInMainWindow(JPanel leaderboardPanel) {
         leaderboardPanel.setLayout(new FlowLayout());
         JButton closeBtn = new JButton("Sulge");
         leaderboardPanel.add(closeBtn);
 
-        // Remove InfoBoard if present
+        // Ajutine InfoBoard eemaldus Edetabeli vaatamise ajal samas aknas
         container.remove(infoBoard);
-        // Remove previous leaderboard if present
+        // Eemalda eelmine edetabel, kui pole tühi
         if (leaderboardPanelRef != null) {
             container.remove(leaderboardPanelRef);
         }

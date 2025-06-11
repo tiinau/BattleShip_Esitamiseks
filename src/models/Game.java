@@ -8,8 +8,8 @@ public class Game {
     private int[][] boardMatrix;    // Mängulaual asuvad laevad
     private Random random = new Random();
 
-    private int[] ships = {2, 1};   // TEST KAHE LAEVAGA
-    //private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};    // Laevade valik
+    //private int[] ships = {2, 1};   // TEST KAHE LAEVAGA
+    private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};    // Laevade valik
     //private int[] ships = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};    // Laevade valik
 
     private int shipsCounter = 0;
@@ -35,8 +35,8 @@ public class Game {
 
     public void setupGameBoard() {
         boardMatrix = new int[boardSize][boardSize]; // Uus laua suurus ( algseis 0)
-        int shipsTotal = ships.length;              // Kui palju on laevu kokku
-        int shipsPlaced = 0;                        // Kui palju on laevu paigutatud
+        int shipsTotal = ships.length;               // Kui palju on laevu kokku
+        int shipsPlaced = 0;                         // Kui palju on laevu paigutatud
         // Laevade järjekorra segamine
         while (shipsPlaced < shipsTotal) {
             int length = ships[shipsPlaced];  // Millist laeva paigutada (laeva pikkus)
@@ -94,8 +94,8 @@ public class Game {
         // Kirjutame laeva mängualuale : paigutame igasse lahtrisse laeva pikkuse
         for (int i = 0; i < length; i++) {
             int r = vertical ? row + i : row;  // Kasutame rida või mitte, sõltub suunast kas laev on vertik või horisont
-            int c = vertical ? col : col + i; // Sama veeru kohta
-            boardMatrix[r][c] = length; // Määrame laeva lahtrisse selle mpikkuse
+            int c = vertical ? col : col + i;  // Sama veeru kohta
+            boardMatrix[r][c] = length;        // Määrame laeva lahtrisse selle mpikkuse
         }
         // Laeva ümber kaitsetsooni lisamine (laevad ei puuduta teineteist)
         makeSurrounding(row, col, length, vertical);
