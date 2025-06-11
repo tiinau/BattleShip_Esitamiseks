@@ -116,7 +116,6 @@ public class View extends JFrame {
         }
         container.add(leaderboardPanel, BorderLayout.EAST);
         leaderboardPanelRef = leaderboardPanel;
-
         container.revalidate();
         container.repaint();
 
