@@ -16,6 +16,10 @@
 
 **Kui on küsimusi, siis küsida Õpetajalt Teamsis Chat ...** 
 
+
 # Muudatused
 
-1. "Edetabel" ja "Vali laua suurus" mitteaktiivsed mängu ajal. ('MyNewGameListener' - false  Controller - tagasi aktiivseks ) 
+1. "Edetabel" ja "Vali laua suurus" mitteaktiivsed mängu ajal. 
+ ('MyNewGameListener' - false  Controller - tagasi aktiivseks)
+2. Mängu pilt jääb ekraanile, kui mäng lõppeb ja küsitakse nime. 
+  'GameBoard' 

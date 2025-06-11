@@ -7,9 +7,11 @@ public class Game {
     private int boardSize; // Mängulaua suurus vaikimisi 10x10
     private int[][] boardMatrix; // Mängulaual asuvad laevad
     private Random random = new Random();
+
+    private int[] ships = {2, 1};                   // TEST KAHE LAEVAGA
     //private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};  // Laevade pikkused
-    private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};  // Laevade pikkused
-    //private int[] ships = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};      // Laevade pikkused
+    //private int[] ships = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};    // Laevade pikkused
+
     private int shipsCounter = 0;
     private int clickCounter = 0; //klikkide lugemine
 
@@ -194,7 +196,4 @@ public class Game {
     public void setClickCounter(int clickCounter) { // kui leitakse kasvab ühe võrra
         this.clickCounter += clickCounter;          // kasvamine sõltub sellest, mis väärtus enne oli
     }
-
-
-
 }

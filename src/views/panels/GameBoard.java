@@ -28,26 +28,19 @@ public class GameBoard extends JPanel {
     }
 
     @Override
-    protected void paintComponent(Graphics g) { //Meetod joonte joonistamiseks (ruudustik)
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_DEFAULT);
-        // Kirjastiil ja suurus mängulaual
         g.setFont(new Font("Verdana", Font.BOLD, 14));
-        // Tähestik koos ruutudega
         drawColumnAlphabet(g);
-
-        // Vasakule serva numbrid ruutudega
         drawRowColumn(g);
 
-        if(model.getGame() != null && !model.getGame().isGameOver())    {
+        // Always draw the board if a game exists
+        if(model.getGame() != null) {
             model.drawUserBoard(g);
-
         }
-
-        // Täidab ülejäänud ruudustiku
         drawGameGrid(g);
-
     }
 
     private void drawGameGrid(Graphics g) {
@@ -63,7 +56,6 @@ public class GameBoard extends JPanel {
                 g.drawRect(x, y, width, height); // Joonistab ühe ruudu
                 matrix.add(new GridData(r, c, x, y, width, height));
                 x += width;
-
             }
             // Järgmise rea seaded
             y = (startY + height) + (height * i);
@@ -71,7 +63,6 @@ public class GameBoard extends JPanel {
             x = startX + width;
         }
         model.setGridData(matrix);
-
     }
 
     private void drawRowColumn(Graphics g) {
@@ -88,7 +79,6 @@ public class GameBoard extends JPanel {
             }
             i++;
         }
-
     }
 
     private void drawColumnAlphabet(Graphics g) { // Tähestiku lisamise meetod
@@ -101,8 +91,6 @@ public class GameBoard extends JPanel {
                 g.drawString(alphabet[i], x + (width / 2) - 5, 2 * (startY + startY) + 5);
                 i++; // Suurenda tähe indeksit ühe võrra
             }
-
-
         }
     }
 
