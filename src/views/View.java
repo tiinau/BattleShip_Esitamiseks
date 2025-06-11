@@ -101,7 +101,7 @@ public class View extends JFrame {
         infoBoard.getBtnScoreBoard().addActionListener(actionListener);
     }
 
-    // Peaaknas edetabeli vaatamine
+    // Peaaknas Edetabeli vaatamine
     public void showLeaderboardInMainWindow(JPanel leaderboardPanel) {
         leaderboardPanel.setLayout(new FlowLayout());
         JButton closeBtn = new JButton("Sulge"); // Nupp edetabeli sulgemiseks
