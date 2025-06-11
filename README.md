@@ -19,7 +19,7 @@
 
 # Muudatused
 
-**Programmi testimiseks** on laevade asukohad värvitud nähtavaks ja laevade arv on vähendatud
+**Programmi testimiseks** saab laevade asukohad värvida nähtavaks ja laevade arvu vähendada 
 AUSALT MÄNGIMISEKS tuleks teha muudatused: 
 a) failis 'Game' kus saab laevade hulka muuta kui rida 11 (kommenteeri välja) ja realt 12 (eemalda kommentaar)
 b) failis 'Model' saab muuta värvi kui asendada rida 101 (kommenteeri välja) reaga 102 (eemalda kommentaar)

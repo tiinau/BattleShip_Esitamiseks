@@ -96,10 +96,10 @@ public class Model {
                     padding = 3;
                     break;
                 default:
-                    if (cellValue >= 1 && cellValue <= 5) { // laevad 1-5
+                    if (cellValue >= 1 && cellValue <= 5) { // Laevad 1-5
                         // Kommewnteeri välja kui ei soovi laevu mängulaual näha
-                        color = new Color(236, 236, 137); // siin asuvad laevad tegelikult   SOBI TEGEMISEKS
-                        // color = new Color(0, 190, 255); // siin asuvad laevad tegelikult          AUS MÄNGIMINE
+                        // color = new Color(236, 236, 137);      // Siin asuvad laevad tegelikult   SOBI TEGEMISEKS
+                         color = new Color(0, 190, 255); // Siin asuvad laevad tegelikult    AUS MÄNGIMINE
                     }
             }
 

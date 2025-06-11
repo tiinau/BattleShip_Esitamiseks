@@ -89,8 +89,8 @@ public class View extends JFrame {
         gameBoard.addMouseListener(controller);                 // Hiire kuulamine. Võtame mängulaualt selle hiire liikumise
         gameBoard.addMouseMotionListener(controller);
     }
-    public void registerComboBox(ItemListener itemListener) {   //Registreerib endale selle valiku, mis on tehtud comboboxis
-        infoBoard.getCmbSize().addItemListener(itemListener);   //Hiire liikumine
+    public void registerComboBox(ItemListener itemListener) {   // Registreerib endale selle valiku, mis on tehtud comboboxis
+        infoBoard.getCmbSize().addItemListener(itemListener);   // Hiire liikumine
     }
 
     public void registerNewGameButton(ActionListener actionListener) {
@@ -104,19 +104,19 @@ public class View extends JFrame {
     // Peaaknas edetabeli vaatamine
     public void showLeaderboardInMainWindow(JPanel leaderboardPanel) {
         leaderboardPanel.setLayout(new FlowLayout());
-        JButton closeBtn = new JButton("Sulge");
+        JButton closeBtn = new JButton("Sulge"); // Nupp edetabeli sulgemiseks
         leaderboardPanel.add(closeBtn);
 
-        // Remove InfoBoard and add leaderboardPanel to EAST
+        // Paiguta Edetabel paremale
         this.getContentPane().remove(infoBoard);
         this.getContentPane().add(leaderboardPanel, BorderLayout.EAST);
-        leaderboardPanelRef = leaderboardPanel; // Save reference
+        leaderboardPanelRef = leaderboardPanel; 
 
         this.revalidate();
         this.repaint();
 
         closeBtn.addActionListener(e -> {
-            // Remove leaderboard and restore InfoBoard
+            // Sulgemisel eemalda Edetabel nii, et infotahvel jääks paremale
             this.getContentPane().remove(leaderboardPanelRef);
             this.getContentPane().add(infoBoard, BorderLayout.EAST);
             this.revalidate();
