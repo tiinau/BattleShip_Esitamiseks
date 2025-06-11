@@ -20,6 +20,7 @@
 # Muudatused
 
 1. "Edetabel" ja "Vali laua suurus" mitteaktiivsed mängu ajal. 
- ('MyNewGameListener' - false  Controller - tagasi aktiivseks)
+ (_'MyNewGameListener'_ - nupud mittekatiivseks mängu ajal  ning _'Controller'_ - tagasi aktiivseks).
 2. Mängu pilt jääb ekraanile, kui mäng lõppeb ja küsitakse nime. 
-  'GameBoard' 
+  _'GameBoard'_ _if_ lausest eemaldasin '&&' osa. 
+3. Kui muudetakse laua suurust, siis eelmine mäng eemaldatakse. _'Model'_  _setter_  mäng 'null'.

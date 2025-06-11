@@ -36,7 +36,7 @@ public class GameBoard extends JPanel {
         drawColumnAlphabet(g);
         drawRowColumn(g);
 
-        // Always draw the board if a game exists
+        // Alati kuva mängu pilt, kui mängon olemas
         if(model.getGame() != null) {
             model.drawUserBoard(g);
         }

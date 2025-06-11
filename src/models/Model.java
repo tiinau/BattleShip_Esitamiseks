@@ -64,7 +64,7 @@ public class Model {
         if (id != -1) { // Kui ei ole -1
             return gridData.get(id).getCol();
         }
-        return -1; //Viga
+        return -1; // Viga
     }
 
     public void setupNewGame() {
@@ -98,8 +98,8 @@ public class Model {
                 default:
                     if (cellValue >= 1 && cellValue <= 5) { // laevad 1-5
                         // Kommewnteeri välja kui ei soovi laevu mängulaual näha
-                        color = new Color(236, 236, 137); // siin asuvad laevad tegelikult              SOBI TEGEMISEKS
-                        // color = new Color(0, 190, 255); // siin asuvad laevad tegelikult                     AUS MÄNGIMINE
+                        color = new Color(236, 236, 137); // siin asuvad laevad tegelikult   SOBI TEGEMISEKS
+                        // color = new Color(0, 190, 255); // siin asuvad laevad tegelikult          AUS MÄNGIMINE
                     }
             }
 
@@ -175,8 +175,6 @@ public class Model {
     }
 
 
-
-
     //GETTERS
 
     public int getBoardSize() {
@@ -212,11 +210,9 @@ public class Model {
 
     public void setBoardSize(int boardSize) {
         this.boardSize = boardSize;
+        this.game = null; // Kui laua suurus muutub, kustuta eelmine mäng
     }
-
     public void setGridData(ArrayList<GridData> gridData) {
         this.gridData = gridData;
     }
-
-
 }
