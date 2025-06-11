@@ -20,9 +20,9 @@
 # Muudatused
 
 **Programmi testimiseks** saab laevade asukohad värvida nähtavaks ja laevade arvu vähendada 
-AUSALT MÄNGIMISEKS tuleks teha muudatused: 
-a) failis 'Game' kus saab laevade hulka muuta kui rida 11 (kommenteeri välja) ja realt 12 (eemalda kommentaar)
-b) failis 'Model' saab muuta värvi kui asendada rida 101 (kommenteeri välja) reaga 102 (eemalda kommentaar)
+Tuleks teha muudatused: 
+a) failis 'Game' kus saab laevade hulka muuta kui rida 11 (eemalda kommentaar) ja reale 12 (lisa kommentaar)
+b) failis 'Model' saab muuta värvi kui asendada rida 101 (eemalda kommentaar) reaga 102 (lisa kommentaar)
 
 1. "Edetabel" ja "Vali laua suurus" mitteaktiivsed mängu ajal. 
  (_'MyNewGameListener'_ - nupud mittekatiivseks mängu ajal  ning _'Controller'_ - tagasi aktiivseks).

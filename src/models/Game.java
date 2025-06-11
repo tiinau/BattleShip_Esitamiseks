@@ -8,8 +8,8 @@ public class Game {
     private int[][] boardMatrix;    // Mängulaual asuvad laevad
     private Random random = new Random();
 
-    //private int[] ships = {2, 1};   // TEST KAHE LAEVAGA
-    private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};    // Laevade valik
+    private int[] ships = {2, 1};   // TEST KAHE LAEVAGA
+    //private int[] ships = {5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};    // Laevade valik
     //private int[] ships = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1};    // Laevade valik
 
     private int shipsCounter = 0;
