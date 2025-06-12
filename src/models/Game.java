@@ -81,6 +81,7 @@ public class Game {
 
     /**
      * Kaitsetsoon on nr 9 ja vesi on nr 0
+     * muuda kaitseala veeks, asenda 9-d nullidega (veega)
      */
     private void replaceNineToZero() {
         for (int row = 0; row < boardSize; row++) {
@@ -119,7 +120,8 @@ public class Game {
         return true;
     }
 
-    /** Laevadele ümbritseva ala jätmine
+    /** Laevadele ümbritseva kaitseala jätmine
+     * kaitseala nr 9, vaba vesi nr 0
      * @param row rida
      * @param col veerg
      * @param length pikkus

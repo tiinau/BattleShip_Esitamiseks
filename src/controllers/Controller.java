@@ -171,6 +171,11 @@ public class Controller implements MouseListener, MouseMotionListener {
     public void mouseDragged(MouseEvent e) { // Kasutamata meetod, aga peab olemas olema
     }
 
+    /**
+     * Hiire liikumise jälgimine
+     * id (rida ja veerg) näitab infot InfoBoard paneelil
+     * @param e the event to be processed
+     */
     @Override
     public void mouseMoved(MouseEvent e) {  // Seda kasutame
         // TEST System.out.println("Liigub");
@@ -182,7 +187,7 @@ public class Controller implements MouseListener, MouseMotionListener {
         int row = model.getRowById(id);
         int col = model.getColById(id);
         if(id != -1) {
-            view.getLblID().setText(String.valueOf(id + 1)); //Näitamine inimlikult 1 jne
+            view.getLblID().setText(String.valueOf(id + 1)); // Näitamine inimlikult 1 jne
         }
         // Paneb paneelile rea ja veeru numbrid
         // view.getLblRowCol().setText(String.valueOf(row + 1 + "/" + (col+1))); //minu variant
