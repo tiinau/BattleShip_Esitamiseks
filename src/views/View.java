@@ -11,10 +11,10 @@ import views.panels.InfoBoard;
 
 public class View extends JFrame {
     private Model model;
-    private GameBoard gameBoard;
-    private InfoBoard infoBoard;
-    private JPanel leaderboardPanelRef; // Uus paneel edetabeli vaatamiseks
-    private JPanel container;           // Edetabeli vaatamiseks samas aknas paremal
+    private GameBoard gameBoard;        // Mängulaud (erinevad seaded)
+    private InfoBoard infoBoard;        // Info mängu kohta (kollast värvi paneel)
+    private JPanel leaderboardPanelRef; // Uus paneel Edetabeli vaatamiseks
+    private JPanel container;           // Ala Edetabeli vaatamiseks (sulge nupuga) samas aknas paremal
 
     public View(Model model) {
         super("Laevade pommitamine");
@@ -90,18 +90,24 @@ public class View extends JFrame {
         gameBoard.addMouseListener(controller);                 // Hiire kuulamine. Võtame mängulaualt selle hiire liikumise
         gameBoard.addMouseMotionListener(controller);
     }
-    public void registerComboBox(ItemListener itemListener) {   // Registreerib endale selle valiku, mis on tehtud comboboxis
+    public void registerComboBox(ItemListener itemListener) {   // 'Vali laua suurus' Registreerib endale selle valiku, mis on tehtud comboboxis
         infoBoard.getCmbSize().addItemListener(itemListener);   // Hiire liikumine
     }
 
     public void registerNewGameButton(ActionListener actionListener) {
-        infoBoard.getBtnNewGame().addActionListener(actionListener); // Nupu klikimise funktsionaalsus
+        infoBoard.getBtnNewGame().addActionListener(actionListener); // 'UUs mäng' nupu klikimise funktsionaalsus
     }
 
-    public void registerScoreBoardButton(ActionListener actionListener) {
+    public void registerScoreBoardButton(ActionListener actionListener) { // 'Edetabel' nupp
         infoBoard.getBtnScoreBoard().addActionListener(actionListener);
     }
 
+    /**
+     * Näita edetabelit paneelil,
+     * juures "Sulge" nupp
+     * ajutiselt peida Infoboard vaatest
+     * @param leaderboardPanel
+     */
     // Peaaknas Edetabeli vaatamine mille juures on sulgemiseks nupp
     public void showLeaderboardInMainWindow(JPanel leaderboardPanel) {
         leaderboardPanel.setLayout(new FlowLayout());

@@ -67,10 +67,20 @@ public class Model {
         return -1; // Viga
     }
 
+    /**
+     * Seadista uus mäng vastavalt valitud laua suurusele
+     */
     public void setupNewGame() {
         game = new Game(boardSize);
     }
 
+    /**
+     * Joonista ruudustik sõltuvalt lahtri väärtusest värvide valik
+     * 0 - vesi (sinine)
+     * 7 - pihtas (roheline)
+     * 8 - möödas (punane)
+     * @param g
+     */
     public void drawUserBoard(Graphics g) {         // Antakse kaasa joonistuslaud
         ArrayList<GridData> gdList = getGridData(); // See loodi laua joonistamisel
         int[][] matrix = game.getBoardMatrix();     // See on laevade, vee jm info (0, 1-5, 7, 8)

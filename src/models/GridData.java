@@ -8,7 +8,7 @@ public class GridData {
     private int width;
     private int height;
 
-    public GridData(int row, int col, int x, int y, int width, int height) { //Konstruktor
+    public GridData(int row, int col, int x, int y, int width, int height) { // Konstruktor
         this.row = row;
         this.col = col;
         this.x = x;

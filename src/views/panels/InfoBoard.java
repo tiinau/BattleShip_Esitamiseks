@@ -27,29 +27,34 @@ public class InfoBoard  extends JPanel {
     // Rippmenüü
     private JComboBox<String> cmbSize; // rippmenüü, kust saab valida mängulaua suurust
 
-    //Nupud
+    // Nupud
     private JButton btnNewGame; // nupp uus mäng
     private JButton btnScoreBoard; // nupp edetabel
 
-    //TODO edetabeliga seotud asjad
-    private JRadioButton rdoFile; // Radionupp - info looetakse failist
-    private JRadioButton rdoDb; // Info loetakse andmebaasist
+    // Edetabeliga seotud asjad
+    private JRadioButton rdoFile;                     // Radionupp - info looetakse failist
+    private JRadioButton rdoDb;                       // Info loetakse andmebaasist
     private ButtonGroup btnGroup = new ButtonGroup(); // Mõlemad rdo nupud on siin
-    private JCheckBox chcWhere; // Eraldi aknas "linnuke"
+    private JCheckBox chcWhere;                       // Eraldi aknas "linnuke"
 
 
+    /**
+     * Mängu info kuvamise paneel (paremal)
+     * Teksti ja nuppude asukohad
+     * Värvid Taust- sinine, paneel - kollane
+     */
     public InfoBoard() {
-        // setLayout(new FlowLayout(FlowLayout.LEFT)); // Algne layout
-        setLayout(new BorderLayout()); // Uus layout, selleks et venitaks selle kollase paneeli suuremaks
+        // setLayout(new FlowLayout(FlowLayout.LEFT));  // Algne layout
+        setLayout(new BorderLayout());                  // Uus layout, selleks et venitaks selle kollase paneeli suuremaks
         setPreferredSize(new Dimension(400, 188));
         setBackground(new Color(0,190,255));
 
         pnlComponent.setBackground(new Color(236, 236, 137)); // Sellele paneelile lähevad kõik labelid (hiire liikumine, laua suurus, nupud jne)
 
-        gbc.anchor = GridBagConstraints.WEST; // Määrame kuhu need labelid tulevad - vasakule
-        gbc.insets = new Insets(2, 2, 2, 2); // Määrad palju jätad ruumi ümber labelite
+        gbc.anchor = GridBagConstraints.WEST;                          // Määrame kuhu need labelid tulevad - vasakule
+        gbc.insets = new Insets(2, 2, 2, 2);      // Määrad palju jätad ruumi ümber labelite
 
-        //Hakkame rea kaupa neid labelid seadistama
+        // Hakkame rea kaupa neid labelid seadistama
         setupLine1();
         setupLine2();
         setupLine3();
@@ -60,10 +65,10 @@ public class InfoBoard  extends JPanel {
         setupButtons();
         setupRadioButtons();
 
-        //Tühja osa täitmine, mis on veniv
+        // Tühja osa täitmine, mis on veniv
         gbc.gridx = 0;
-        gbc.gridy = 12; // Peab olema 1 rida rohkem kui sul tegelt ridu on, siis ei tee koledaks vaadet suureks tehes.
-        gbc.gridwidth = 2; // Kasutusel kaks veergu
+        gbc.gridy = 12;              // Peab olema 1 rida rohkem kui sul tegelt ridu on, siis ei tee koledaks vaadet suureks tehes.
+        gbc.gridwidth = 2;           // Kasutusel kaks veergu
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
@@ -71,10 +76,7 @@ public class InfoBoard  extends JPanel {
         flowPanel.setOpaque(false); // Nähtamatu, ainult venib
         pnlComponent.add(flowPanel, gbc);
 
-
         add(pnlComponent, BorderLayout.CENTER); // Lisame selle kollase paneeli frame paneelile
-
-
     }
 
     private void setupLine1() {
@@ -158,8 +160,8 @@ public class InfoBoard  extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 4;
         pnlComponent.add(lblShip, gbc);
-
     }
+
     private void setupLine6() {
         // Kuuenda rea esimene veerg ( mängulaua suurus)
         JLabel label = new JLabel("Laua suurus");
@@ -176,7 +178,7 @@ public class InfoBoard  extends JPanel {
         pnlComponent.add(lblGameBoard, gbc);
     }
 
-    // Komboboxiga rea tegemine
+    // Comboboxiga rea tegemine
     private void setupComboBox() {
         JLabel label = new JLabel ("Vali laua suurus");
         label.setFont(fontBold);
@@ -224,6 +226,10 @@ public class InfoBoard  extends JPanel {
         pnlComponent.add(btnScoreBoard, gbc);
 
     }
+
+    /**
+     * Raadionupud, kas edetabel loetakse Failist õvi andmebaasist
+     */
     private void setupRadioButtons() {
         JLabel label = new JLabel("Edetabeli sisu");
         label.setFont(fontBold);
@@ -261,14 +267,10 @@ public class InfoBoard  extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 11;
         pnlComponent.add(chcWhere, gbc);
-
-
-
     }
 
 
     //GETTERS
-
 
     public JPanel getPnlComponent() {
         return pnlComponent;

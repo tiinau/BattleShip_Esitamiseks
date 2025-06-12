@@ -22,7 +22,8 @@ public class Database implements AutoCloseable {
     }
 
     /**
-     * Tablei loomine
+     * Kontrollib kas tabel on olemas,
+     * Tablei loomine kui tabelit pole
      */
     private void ensureTableExists() {
         String createTableSql = "CREATE TABLE IF NOT EXISTS " + tableName + " (" +
@@ -42,12 +43,19 @@ public class Database implements AutoCloseable {
         }
     }
 
+    /**
+     * Andmebaasiga ühendamine
+     * @throws SQLException
+     */
     private void connect() throws SQLException {
         connection = DriverManager.getConnection(dbUrl);
        //System.out.println("Ühendus loodud: " + dbUrl); // TEST
     }
 
-
+    /**
+     * Andmebasiga ühenduse sulgemine
+     * @throws Exception
+     */
     @Override
     public void close() throws Exception {
         if (connection != null) {
@@ -85,7 +93,11 @@ public class Database implements AutoCloseable {
         }
     }
 
-
+    /**
+     * Andmete lugemine andmebaasist
+     * @param boardSize sorteerib mängulaua suuruse järgi
+     * @return
+     */
     public ArrayList<ScoreData> select(int boardSize) {
         ArrayList<ScoreData> result = new ArrayList<>();
         String sql = "SELECT * FROM " + tableName + " WHERE board_size = ? ORDER BY time, clicks, game_time; ";
@@ -105,7 +117,6 @@ public class Database implements AutoCloseable {
                     result.add(data);
                 }
             }
-
         } catch (SQLException e) {
             System.err.println("Viga SELECT päringus: " + e.getMessage());
         }

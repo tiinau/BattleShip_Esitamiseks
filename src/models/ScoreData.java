@@ -63,7 +63,7 @@ public class ScoreData implements Comparable<ScoreData>{
     }
 
     /**
-     * Vormindab etteantuda jaj kujule MM:SS
+     * Vormindab etteantuda aja kujule MM:SS
      * @param seconds sekundid kujul 98
      * @return vormindatud aeg
      */

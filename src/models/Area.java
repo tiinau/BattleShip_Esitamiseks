@@ -1,7 +1,7 @@
 package models;
 
 public class Area {
-    int startRow;       // ala ülemise rea index
+    int startRow;       // Ala ülemise rea index
     int endRow;         // Ala alumise rea index
     int startCol;       // Vasakpoolse veeru index
     int endCol;         // Ala parempoolse veeru indeks

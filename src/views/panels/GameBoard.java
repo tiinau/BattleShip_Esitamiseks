@@ -27,6 +27,10 @@ public class GameBoard extends JPanel {
         }
     }
 
+    /**
+     * Mängulaua suurus
+     * @return
+     */
     @Override
     public Dimension getPreferredSize() { // Akna tegemine, et oleks 10x10 board või 15x15 board
         int w = (width * model.getBoardSize()) + width + (2 * startX);
@@ -34,6 +38,11 @@ public class GameBoard extends JPanel {
         return new Dimension(w, h);
     }
 
+    /**
+     * Mängulaua taust pilt või värv
+     * tähed ja numbrid mängulaua ümber
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -58,6 +67,10 @@ public class GameBoard extends JPanel {
         drawGameGrid(g);
     }
 
+    /**
+     * Tühja maatriksi ruutude joonistamine
+     * @param g
+     */
     private void drawGameGrid(Graphics g) {
         ArrayList<GridData> matrix = new ArrayList<>(); // Tühja maatriksi tegemine
         g.setColor(Color.BLACK);
@@ -80,22 +93,30 @@ public class GameBoard extends JPanel {
         model.setGridData(matrix);
     }
 
+    /**
+     * Numbrite lisamine mängulaua äärde
+     * @param g
+     */
     private void drawRowColumn(Graphics g) {
-        int i = 1; // Esimene number mängulaual
-        g.setColor(Color.RED);
+        int i = 1;              // Esimene number mängulaual
+        g.setColor(Color.RED);  // Numbri värv
 
         for(int y = startY + height; y< (height * model.getBoardSize()) + height; y += height) {
             g.drawRect(startX, y, width, height); // Joonistab ruudustiku ülevalt alla
             if (i < 10) {
                 g.drawString(String.valueOf(i), startX + (width / 2) - 5, y + 2 * (startY + startY));
 
-            }else {
+            } else {
                 g.drawString(String.valueOf(i), startX + (width / 2)  -10, y + 2 * (startY + startY));
             }
             i++;
         }
     }
 
+    /**
+     * Tähestiku kirjutamine mängulaua äärde
+     * @param g
+     */
     private void drawColumnAlphabet(Graphics g) { // Tähestiku lisamise meetod
         int i = 0;                 // Tähestiku massiivi esimese tähe index A=0, B=1 jne
         g.setColor(Color.WHITE);   // Tähestiku joonistamise värv

@@ -14,11 +14,10 @@ public class App {
 
                 //Hiire liikumise aktiviseerimiseks
                 view.registerGameBoardMouse(controller);
-
                 view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Sellega paneme frame tööle (frame on view-s tehtud)
                 view.pack();
-                view.setLocationRelativeTo(null); // Paneb ekraani keskele
-                view.setVisible(true); // Tee Jframe nähtavaks /
+                view.setLocationRelativeTo(null); // Paigutab akna ekraani keskele
+                view.setVisible(true);            // Tee Jframe nähtavaks /
             }
         });
     }

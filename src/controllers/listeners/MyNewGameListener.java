@@ -19,11 +19,16 @@ public class MyNewGameListener implements ActionListener {
         this.gameTimer = gameTimer;
     }
 
+    /**
+     * Uue mänguga alustamisel uue mängu seadmine
+     * mängu ajal kõik nupud pole aktiivsed (laua suuruse valik ja edatabel)
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         // System.out.println("TEST konsoolis tekst - Uus mäng");   // Konsooli  test
         if(!gameTimer.isRunning()) {                                // Mäng ei käi
-            // See on uus lahendus , mängu kujundus taustal, mitte kohe ekraanil
+            // See on uus lahendus, mängu kujundus taustal, mitte kohe ekraanil
             new Thread(() -> {
                 model.setupNewGame();
                 model.getGame().setupGameBoard();                   // Seadistame mängulaua

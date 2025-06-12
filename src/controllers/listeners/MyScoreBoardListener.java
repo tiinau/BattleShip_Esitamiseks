@@ -28,9 +28,14 @@ public class MyScoreBoardListener implements ActionListener {
         this.view = view;
     }
 
+    /**
+     * Edetabeli vaatamine kas andmebaasist või failist
+     * edetabel kas eraldi aknas või mängulaual
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!view.getChcWhere().isSelected()) { // Kui "Eraldi aknas" EI ole valitud
+        if (!view.getChcWhere().isSelected()) {     // Kui "Eraldi aknas" EI ole valitud
             JPanel leaderboardPanel = new JPanel();
 
             ArrayList<ScoreData> result;
@@ -50,7 +55,7 @@ public class MyScoreBoardListener implements ActionListener {
                 return;
             }
 
-            // Create table
+            // Joonista tabel
             String[][] data = new String[result.size()][5];
             for (int i = 0; i < result.size(); i++) {
                 data[i][0] = result.get(i).getName();
@@ -90,6 +95,11 @@ public class MyScoreBoardListener implements ActionListener {
         }
     }
 
+    /**
+     * Tabeli joonistamine andmebaasist saadud andmete jaoks
+     * @param result
+     * @return
+     */
     private boolean createTableDb(ArrayList<ScoreData> result) {
         if (!result.isEmpty()) {
             String[][] data = new String[result.size()][5]; // Veergude arv on meil tabelis 5
@@ -100,7 +110,7 @@ public class MyScoreBoardListener implements ActionListener {
                 data[i][3] = String.valueOf(result.get(i).getBoard());
                 data[i][4] = result.get(i).getPlayedTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
             }
-            // Loome read-only TableModel(topelklikk lahtris võimatu)
+            // Loome 'read-only' TableModel(topelklikk lahtris võimatu)
             DefaultTableModel tableModel = new DefaultTableModel(data, model.getColumnNames()) {
                 @Override
                 public boolean isCellEditable(int row, int column) {
@@ -123,11 +133,9 @@ public class MyScoreBoardListener implements ActionListener {
                             rowData.append(table.getValueAt(row, i)).append(" | ");
                         }
                         JOptionPane.showMessageDialog(table, "Valitud rida:\n" + rowData);
-
                         // Ainult lahtri sisu
                         Object cellObject = table.getValueAt(row,col);
                         JOptionPane.showMessageDialog(table, "Valitud lahter:\n " + cellObject);
-
                     }
                 }
             });
@@ -156,6 +164,11 @@ public class MyScoreBoardListener implements ActionListener {
         return false;
     }
 
+    /**
+     * Tabeli joonistamine failist saadud andmete jaoks
+     * @param result
+     * @return
+     */
     private boolean createTable(ArrayList<ScoreData> result) {
         if (!result.isEmpty()) { // Ei ole tühi
             Collections.sort(result);
@@ -168,7 +181,7 @@ public class MyScoreBoardListener implements ActionListener {
                 data[i][3] = String.valueOf(result.get(i).getBoard());
                 data[i][4] = result.get(i).getPlayedTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
             }
-            JTable table = new JTable(data, model.getColumnNames()); // columnNames on massiiv
+            JTable table = new JTable(data, model.getColumnNames()); // 'columnNames' on massiiv
 
             // Määrame veergude laiused
             int[] columnWidth = {100, 80, 60, 80, 160};  // Veergude laiused ekraanil
@@ -191,6 +204,4 @@ public class MyScoreBoardListener implements ActionListener {
         dlgScoreBoard.setLocationRelativeTo(null); // Paigutame keset ekraani
         dlgScoreBoard.setVisible(true);
     }
-
-
 } // Lõpp

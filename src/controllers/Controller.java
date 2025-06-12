@@ -22,14 +22,14 @@ public class Controller implements MouseListener, MouseMotionListener {
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
-        gameTimer = new GameTimer(); //loome ajaobjekti, aga ei käivita
+        gameTimer = new GameTimer(); // Loome ajaobjekti, aga ei käivita
 
         guiTimer = new Timer(1000, e ->{
             if (gameTimer.isRunning()) {
                 this.view.getLblTime().setText(gameTimer.formatGameTime());
             }
         });
-        guiTimer.start(); //Käivitab GUI taimeri aga mängu aega (Gametimer) mitte!
+        guiTimer.start(); // Käivitab GUI taimeri aga mängu aega (Gametimer) mitte!
 
         // Listenerid
         view.registerComboBox(new MyComboBoxListener(model, view));                // Lisab comboboxi asjad faili listeneri kaustas
@@ -37,10 +37,13 @@ public class Controller implements MouseListener, MouseMotionListener {
         view.registerScoreBoardButton(new MyScoreBoardListener(model, view));
     }
 
-
+    /**
+     * Hiirega mängulaual klikkimine
+     * @param e the event to be processed
+     */
     @Override
     public void mouseClicked(MouseEvent e) { // Kasutame
-        if(gameTimer.isRunning()) { // Kas toimub mäng
+        if(gameTimer.isRunning()) {         // Kas toimub mäng
             // Kuhu klikiti hiirega
             int id = model.checkGridIndex(e.getX(), e.getY());
             int row = model.getRowById(id);
@@ -65,6 +68,11 @@ public class Controller implements MouseListener, MouseMotionListener {
         }
     }
 
+    /**
+     * Kontrollib kas mäng kestab.
+     * Küsib mängu lõppedes mängija nime
+     * Lisab mängija edetabelisse
+     */
     private void checkGameOver(){
         if(model.getGame() != null && model.getGame().isGameOver()) {
             gameTimer.stop();                           // Peata aeg
@@ -87,6 +95,11 @@ public class Controller implements MouseListener, MouseMotionListener {
         }
     }
 
+    /**
+     * Salvestab tulemsue andmebaasi
+     * lisab nime, aja, klikkide arvu, laua suuruse, kuupäeva
+     * @param name
+     */
     private void saveEntryToTable(String name) {
         try(Database db = new Database(model)){
             db.insert(name, gameTimer.getElapsedSeconds(), model.getGame().getClickCounter(),
@@ -97,6 +110,11 @@ public class Controller implements MouseListener, MouseMotionListener {
         }
     }
 
+    /**
+     * Salvestab tulemuse faili
+     * lisab nime, aja, klikkide arvu, laua suuruse, kuupäeva
+     * @param name
+     */
     public void saveEntryToFile(String name) {
         if(model.checkFileExistsAndContent()){ // NB!
             // Fail on olemas, kirjutame sisu faili
@@ -125,8 +143,8 @@ public class Controller implements MouseListener, MouseMotionListener {
                 int board = model.getBoardSize();
                 String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 String datLine = String.join(";", name, String.valueOf(time), String.valueOf(clicks),  String.valueOf(board), dateTime);
-                pw.println(datLine); // Kirjuta faili
-                pw.close();  // Sulge fail
+                pw.println(datLine);        // Kirjuta faili
+                pw.close();                 // Sulge fail
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -134,27 +152,27 @@ public class Controller implements MouseListener, MouseMotionListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) { //Kasutamata meetod, aga peab olemas olema
+    public void mousePressed(MouseEvent e) { // Kasutamata meetod, aga peab olemas olema
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) { //Kasutamata meetod, aga peab olemas olema
+    public void mouseReleased(MouseEvent e) { // Kasutamata meetod, aga peab olemas olema
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) { //Kasutamata meetod, aga peab olemas olema
+    public void mouseEntered(MouseEvent e) { // Kasutamata meetod, aga peab olemas olema
     }
 
     @Override
-    public void mouseExited(MouseEvent e) { //Kasutamata meetod, aga peab olemas olema
+    public void mouseExited(MouseEvent e) { // Kasutamata meetod, aga peab olemas olema
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) { //Kasutamata meetod, aga peab olemas olema
+    public void mouseDragged(MouseEvent e) { // Kasutamata meetod, aga peab olemas olema
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) { // seda kasutame
+    public void mouseMoved(MouseEvent e) {  // Seda kasutame
         // TEST System.out.println("Liigub");
         String mouse = String.format("x=%03d & y=%03d", e.getX(), e.getY());
         view.getLblMouseXY().setText(mouse);

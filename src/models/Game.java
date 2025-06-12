@@ -22,6 +22,7 @@ public class Game {
 
     /**
      * Näita konsoolis mängulaua sisu
+     * ridade ja veergude arv sõltub valitud laua suurusest (10-15)
      */
     public void showGameBoard() {
         System.out.println();           // Tühi rida
@@ -33,6 +34,11 @@ public class Game {
         }
     }
 
+    /**
+     * Mängu seaded sõltuvad laua suurusest
+     * Laevad paigutatakse juhuslikult
+     * Laevade asendid saavad olla kas vertikaalselt või horisontaalselt
+     */
     public void setupGameBoard() {
         boardMatrix = new int[boardSize][boardSize]; // Uus laua suurus ( algseis 0)
         int shipsTotal = ships.length;               // Kui palju on laevu kokku
@@ -69,10 +75,13 @@ public class Game {
                 return;
             }
         }
-        // Eemaldame ajutised kitsetsoonid (9-d), jätte alles ainult laevad (1-4) ja tühjad vee kohad
+        // Eemaldame ajutised kaitsetsoonid (9-d), jätte alles ainult laevad (1-4) ja tühjad vee kohad
         replaceNineToZero();
     }
 
+    /**
+     * Kaitsetsoon on nr 9 ja vesi on nr 0
+     */
     private void replaceNineToZero() {
         for (int row = 0; row < boardSize; row++) {
             for (int col = 0; col < boardSize; col++) {
@@ -83,6 +92,14 @@ public class Game {
         }
     }
 
+    /**
+     * Laeva paigutamine enne mängu algust
+     * @param row rida
+     * @param col veerg
+     * @param length pikkus
+     * @param vertical vertikaalselt või mitte
+     * @return
+     */
     private boolean tryPlaceShip(int row, int col, int length, boolean vertical) {
         // Kontrolli kas laev mahub mängulauale
         if (vertical && row + length > boardSize) return false;
@@ -102,18 +119,32 @@ public class Game {
         return true;
     }
 
+    /** Laevadele ümbritseva ala jätmine
+     * @param row rida
+     * @param col veerg
+     * @param length pikkus
+     * @param vertical vertikaalselt või mitte
+     */
     private void makeSurrounding(int row, int col, int length, boolean vertical) {
         Area area = getShipSurroundingArea(row, col, length, vertical);
         // Käime ala iga s lahtris ja kui seal on vesi (0) , siis märgime selle kaitseks (9)
         for (int r = area.startRow; r <= area.endRow; r++) {
             for (int c = area.startCol; c <= area.endCol; c++) {
                 if (boardMatrix[r][c] == 0) { // Kas on vesi
-                    boardMatrix[r][c] = 9; // Pane kaitse
+                    boardMatrix[r][c] = 9;    // Pane kaitse
                 }
             }
         }
     }
 
+    /**
+     * Kontrolli kas on ruumi laeva jaoks
+     * @param row rida
+     * @param col veerg
+     * @param length laeva pikkus
+     * @param vertical vertiakalselt või mitte
+     * @return
+     */
     private boolean canPlaceShip(int row, int col, int length, boolean vertical) {
         Area area = getShipSurroundingArea(row, col, length, vertical); // Saame laeva ümbritseva ala
         // Kontrollime igat lahtrit alal  - kuskil pole tühjust, (0), katkestame
@@ -135,7 +166,7 @@ public class Game {
     }
 
     /**
-     * Selles lahtris klikkis kasutaja hiirega, kas sai piuhta või läks mööda
+     * Selles lahtris klikkis kasutaja hiirega, kas sai pihta või läks mööda
      * @param row rida
      * @param col veerg
      * @param what millega tegu (7 pihtas, 8 mööda)
